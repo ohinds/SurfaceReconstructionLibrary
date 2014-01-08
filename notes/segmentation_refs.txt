@@ -1,0 +1,7 @@
+Nikos Paragios, Mikael Rousson, Visvanathan Ramesh. "Knowledge-based
+Registration & Segmentation of the Left Ventricle: A Level Set
+Approach," wacv, vol. 00, no. , p. 37, Sixth 2002.
+
+*L.H. Staib, J.S. Duncan. "Boundary Finding with Parametrically
+Deformable Models," IEEE Transactions on Pattern Analysis and Machine
+Intelligence, vol. 14, no. 11, pp. 1061-1075, November 1992.

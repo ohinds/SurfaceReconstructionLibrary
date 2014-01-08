@@ -1,0 +1,88 @@
+*Euripides G.M. Petrakis, Aristeidis Diplaros, Evangelos
+Milios. "Matching and Retrieval of Distorted and Occluded Shapes Using
+Dynamic Programming," IEEE Transactions on Pattern Analysis and
+Machine Intelligence, vol. 24, no. 11, pp. 1501-1516, November 2002.
+
+*F. Mokhtarian, A.K. Mackworth. "A Theory of Multiscale,
+Curvature-Based Shape Representation for Planar Curves," IEEE
+Transactions on Pattern Analysis and Machine Intelligence, vol. 14,
+no. 8, pp. 789-805, August 1992.
+
+*Davi Geiger, Tyng-Luh Liu, Robert V. Kohn. "Representation and
+Self-Similarity of Shapes," IEEE Transactions on Pattern Analysis and
+Machine Intelligence, vol. 25, no. 1, pp. 86-99, January 2003.
+
+*Pedro F. Felzenszwalb. "Representation and Detection of Deformable
+Shapes," IEEE Transactions on Pattern Analysis and Machine
+Intelligence, vol. 27, no. 2, pp. 208-220, February 2005.
+
+*Y.Gdalyahu and D.Weinshall, \u201cFlexible Syntactic Matching of
+Curves and Its Application to Automatic Hierarchical Classification of
+Silhouettes,\u201d IEEE Trans. Pattern Analysis and Machine
+Intelligence, vol. 21, no. 12, pp. 1,312-1,328, Dec. 1999.
+
+*D. M. Wuescher and K. L. Boyer, "Robust contour decomposition using a
+constant curvature criterion," IEEE Trans. Patt. Anal. Machine
+Intell., vol. 13, pp. 41-51, Jan. 1991.
+
+*Mokhtarian, \u201cSilhouette-Based Isolated Object Recognition
+through Curvature Scale-Space,\u201d IEEE Trans. Pattern Analysis and
+Machine Intelligence, vol. 17, no. 5, pp. 539-544, May 1995.
+
+*W. Gorman, O. R. Mitchell, and F. P. Kuhl, "Partial shape recognition
+using dynamic programming," IEEE Trans. Pattern Anal. Machine Intell.,
+vol. PAMI-10, pp. 257-266, Mar. 1988.
+
+*N.Ansari and E.Delp, \u201cPartial Shape Recognition: A Landmark
+Based Approach,\u201d IEEE Trans. Pattern Analysis and Machine
+Intelligence, vol. 12, pp. 470-489, 1990.
+
+*R. Mehrotra and W. I. Grosky, "Shape matching utilizing indexed
+hypotheses generation and testing," IEEE Trans. Robot. Automat.,
+vol. 5, pp. 70-77, Feb. 1989.
+
+*H.Tagare, \u201cDeformable 2D Template Matching using Orthogonal
+Curves,\u201d IEEE Trans. Medical Imaging, vol. 16, no. 1,
+pp. 108-117, Feb. 1997.
+
+*Brian A. Barsky. "Rational Beta-Splines for Representing Curves and
+Surfaces," IEEE Computer Graphics and Applications, vol. 13, no. 6,
+pp. 24-32, November/December 1993.
+
+*Sadegh Abbasi, Farzin Mokhtarian. "Shape Similarity Retrieval under
+Affine Transform: Application to Multi-view Object Representation and
+Recognition," iccv, vol. 01, no. 1, p. 450, International 1999.
+
+*Ossama El Badawy, Mohamed Kamel. "Shape Representation Using Concavity
+Graphs," icpr, vol. 03, no. 3, p. 30461, 16 2002.
+
+*Mohamed Daoudi, Stanislaw Matusiak. "New Multiscale Planar Shape
+Invariant Representation under a General Affine Transformations,"
+icpr, vol. 03, no. 3, p. 3794, International 2000.
+
+*S. Berretti, A. Del Bimbo. "Multiresolution Spatial Partitioning for
+Shape Representation," icpr, vol. 02, no. 2, pp. 775-778, Pattern
+2004.
+
+*Washington Mio, Anuj Srivastava. "Elastic-String Models for
+Representation and Analysis of Planar Shapes," cvpr, vol. 02, no. 2,
+pp. 10-15, 2004 2004.
+
+*C. Davatzikos, R.N. Bryan. "Using a deformable surface model to obtain
+a shape representation of the cortex," iscv, vol. 00, no. , p. 212,
+International 1995.
+
+*U.Y. Desai. "DCT and wavelet based representations of arbitrarily
+shaped image segments," icip, vol. 01, no. 1, p. 558, 1995 1995.
+
+*L.Floreby, \u201cA Multiscale Algorithm for Closed Contour Matching
+in Image Sequence,\u201d IEEE Int'l Conf. Pattern Recognition,
+pp. 884-888, 1996.
+
+*Tyng-Luh Liu. "A Generalized Shape-Axis Model for Planar Shapes,"
+icpr, vol. 03, no. 3, p. 3491, International 2000.
+
+*Francois Mendels, Pierre Vandergheynst,
+Jean-Philippe Thiran. "Rotation and Scale Invariant Shape
+Representation and Recognition Using Matching Pursuit," icpr, vol. 04,
+no. 4, p. 40326, 16 2002.

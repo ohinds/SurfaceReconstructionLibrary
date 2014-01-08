@@ -1,0 +1,5 @@
+TODO for surface recon library
+
+* speed-up idea: treat all contours as open, to tile closed to open
+and closed to closed just pick the closest two vertices on the contour
+as an edge and tile open-open.

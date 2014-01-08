@@ -1,0 +1,394 @@
+## HOWTO for the SurfaceReconstructionLibrary
+## Oliver Hinds <oph@bu.edu>
+## 2005-10-28
+## http://eslab.bu.edu
+
+######## CONTENTS ###########
+
+I.   PURPOSE
+
+II.  INSTALL
+
+III. USAGE
+
+IV.  ALGORITHM
+
+V.   MAGIC NUMBERS (RECONSTRUCTION PARAMETERS)
+
+############################
+
+
+######## PURPOSE ###########
+
+There are currently no publicly available software packages suitable
+for reconstructing partial surfaces, or surfaces with holes, from an
+input set of slice contours. This library provides this functionality,
+as well as the ability to reconstruct watertight surfaces.
+
+############################
+
+
+######## INSTALL ###########
+
+The Surface Reconstruction Library is a set of c functions designed
+to be compiled into a shared library. This library has been tested
+as part of c and c++ applications. 
+
+* System and Dependencies
+
+The Surface Reconstruction Library has been tested on Linux,
+windows, and mac. The library is dependent on:
+
+the Volume Processing Library
+available from CVCNS at http://eslab.bu.edu/software
+
+the Triangle program,
+available at http://www.cs.cmu.edu/~quake/triangle.html. 
+
+The GNU scientific Library,
+available at http://www.gnu.org/software/gsl/
+
+On windows, the cygwin environment 
+available at http://cygwin.com
+
+On mac, the fink environment 
+available at http://fink.sourceforge.net
+
+
+* Installation
+
+The makefile in the root directory of the distribution should do most
+of the installation work required. Edit the makefile to change any
+parameters specific to your system. To build the library for <os>
+(where <os> is either linux, win, or mac), type 
+$ make OS=<os> 
+then, 
+$ sudo make OS=<os> install
+
+This will copy and link the binaries, as well as install the header
+files. 
+
+After installing the library, build and install the reconFromSlices
+application that provides an interface to the libsr functions for
+building surfaces from contour files. 
+
+To build reconFromSlices for <os> (where <os> is either linux, win, or 
+mac), type 
+$ cd reconFromSlices
+$ make OS=<os> 
+then, 
+$ sudo make OS=<os> install
+
+############################
+
+
+######## USAGE #############
+
+For complete documentation of the functions in libsr, see the html
+documentation in the doc/html directory of the distribution. This
+section will outline the basic steps necessary to reconstruct a
+surface. The reconFromSlices binary implements the functionality for
+reconstructing a surface from a file containing slice contours. 
+
+INPUT
+
+The input required for surface reconstruction is a list of slices. One
+slice consists of a set of contours, each of which represents a
+connected component of the surface in one 2D slice. The contours,
+then, are 1D lists of vertices, either open or closed, where adjacent
+vertices are connected on the slice, and therefore in the surface.
+
+A contour is made of a list of vertices, the state of being open or
+closed, and a list of contours on the following slice that it is
+connected to. The reason for requiring user specification of contour
+connection is that high-quality automatic detection is difficult. A
+rough guess at contour connectivity can be made by the library, as
+discussed later. 
+
+The input for surface reconstruction is built up in the following
+manner:
+
+1) create a list of slices
+2) add contours one at a time to each slice
+3) take algorithmic guess on contour connectivity
+4) refine contour connectivity
+
+INPUT SLICE CONTOUR FILE FORMAT
+
+slice <z_coord>
+contour <open | closed>
+<x> <y>
+<x> <y>
+.
+.
+.
+adjacent
+c0 c1 ... -1
+
+Each slice can have an arbitrary number of contours, each contour can
+have an arbitrary number of vertices. contour adjacency refers to the
+index of the contour on the next slice, and is zero based.
+
+
+EXECUTABLE
+
+The reconFromSlices program will read in a set of slice contours,
+reconstruct them, and write the result to an OFF surface file. See its
+usage for detailed instructions on its use.
+
+
+DATA STRUCTURES
+
+There are three main data structures used for the input.
+
+1) list
+
+The fields of list should not be manipulated directly. Functions for
+list creation, manipulation, and deletion are available in the file
+list.h of the Volume Processing Library.
+
+2) vertex
+
+typedef struct {
+  /* geometry */
+  double x;
+  double y;
+  double z;
+
+  /* the label of this vertex */
+  int label;
+} vertex;
+
+The fields of vertex should be manipulated directly. However, vertices
+can be created and copied via functions in libsrUtil.h. Use the label
+field of the vertex struct if surface vertex labels are required.
+
+3) contour
+
+typedef struct {
+  /* 1D list of vertices making up the contour */
+  list *vertices; 
+  
+  /* whether this contour is closed or not */
+  int closed; 
+
+  /* list of the contours on the next slice that this one is connected to */
+  list *adjacentContours; 
+} contour;
+
+The fields of contour should be manipulated directly. However,
+contours can be created, copied, and deleted via functions in
+libsrUtil.h.
+
+The only data structure needed for the output is surface:
+
+/** surface **/
+typedef struct {
+  /* vertex data and count */
+  int numVertices;
+  double **vertices;
+  int *vertexLabels;
+
+  /* face data and count */
+  int numFaces;
+  int **faces;
+} surface;
+
+The surface structures will be created automatically when
+reconstructing. The input/output functions in surfIO.h and the surface
+deletion function in surfUtil.h are likely the only functions
+necessary for library use.
+
+
+EXECUTION
+
+After the input slice list has been created, the slices can be
+reconstructed into a surface. The function 
+surface *tileSlices(list *slices)
+handles this task. 
+
+
+OUTPUT
+
+Surface structures can be save using either 
+int writeOFF(surface *surf, char *filename)
+or
+int writeOBJ(surface *surf, char *filename)
+
+In addition, label files can be saved via the function
+int writeLabelFile(surface *surf, char *filename)
+
+############################
+
+
+######## ALGORITHM #########
+
+The surface reconstruction algorithm presented here will soon be
+published in a journal. For now, the short version of the story is
+that the solution to surface tiling between two contours is
+accomplished with an extension of Fuchs et. al (1977) algorithm, and
+novel techniques have been developed to solve the correspondence and
+branching problems. Users of this code should cite this abstract:
+
+Hinds, O. P., Polimeni, J. R., Schwartz, E. L., 2006. 
+  Brain surface reconstruction from slice contours [Abstract]. 
+  NeuroImage 31 (1), S445.
+
+############################
+
+
+######## MAGIC NUMBERS (RECONSTRUCTION PARAMETERS) #########
+
+libsrUtil.c
+-----------
+
+resample: Indicates whether the input contours should be resampled
+before reconstruction. The default value is FALSE.  The parameter in
+reconFromSlices for resample is -r or --resamplecontours. 
+
+resampleDistance: Numerical value indicating what vertex distance to
+use as the resampling criterion. The interpretation of this parameter
+is dependent on the parameters resampleAbs and resampleEqual,
+described below. The default value for this parameter is 2.0, which
+has been empirically determined to give satisfying results in many
+cases. The parameter in reconFromSlices for resampleDistance is -a or
+--resampledistance.
+
+resampleAbs: Indicates whether the resampleDistance described above is
+interpreted as an absolute distance criterion for resampling (TRUE),
+or as a relative multiplier of the interslice distance (FALSE). The
+default value is FALSE. The parameter in reconFromSlices for
+resampleAbs is -A or --resampleabs.
+
+resampleEqual: Indicates whether the resampleDistance should be set
+equal to the interslice distance. The the default value is FALSE. The
+parameter in reconFromSlices for resampleEqual is -R or
+--resampleequal.
+
+
+surfUtil.c
+----------
+
+thresholdForCircularity: Numerical value serving as the threshold for
+deciding if a contour is circular or not. If a contour is circular, it
+is capped via tiling to a point rather than to it's skeleton. The
+threshold is applied to a measure of circularity of a contour which is
+computed as the ratio of the standard deviation to the mean distance
+between the contour centroid and each contour vertex. The default
+value is 0.25. The parameter in reconFromSlices for
+thresholdForCircularity is -T or --circularitythresh.
+
+almostClosedMultiplier: Numerical value that serves as a multiplier
+applied to the mean distance between contour vertices, which is then
+compared to the distance between the endpoints of a branched contour
+to determine if it should be closed or not. Higher values will decide
+that contours with larger distances between enpoints will be
+considered closed. The default value is 10.0. The parameter in
+reconFromSlices for almostClosedMultiplier is -b or --almostclosedmult.
+
+
+correspondence.c
+----------------
+
+minPercentile and maxPercentile: Numerical values used to mask
+outliers from the list of contour distances from the connection
+threshold estimation. The list of log contour distances is sorted,
+then the lower minPercentile entries and the upper maxPercentile
+entries are discarded. These entries supposedly never represent the
+region of the PDF of contour distances used to estimate the connection
+threshold and they sometimes make PDF estimation difficult by adding
+"bumps" to the PDF that do not represent real modes. The default value
+for minPercentile is 5.0, and the default value for maxPercentile is
+100.0. If few or no correspondences are made, try raising
+minPercentile, if all the wrong correspondences are made, try lowering
+minPercentile. maxPercentile should rarely, if ever, be neccesary. The
+parameter in reconFromSlices for minPercentile is -p or
+--minpercentile and the parameter for maxPercentile is -P or
+--maxpercentile.
+
+
+branch.c
+--------
+
+cliqueRadius: Integer value indicating the number of neighboring
+vertices taken into account when building the likelihood of contour
+branching at a particular contour vertex. The closest contour on the
+adjacent slice for the cliqueRadius neighbors on each side of the
+current vertex are considered when deciding to which surface patch the
+current vertex belongs. The default is 4. The parameter in
+reconFromSlices for cliqueRadius is -b or --almostclosedmult.
+
+
+tile.c
+------
+
+testEdgeCrossing: Indicates whether edges that create a non-manifold
+surface self-intersection should be explicitly discouraged for new
+addition by adding a penalty term to the cost function. Testing for
+surface intersections adds log(N) complexity to the Fuch's algorithm,
+which is an acceptible tradeoff for the increase in surface
+quality. The default value for testEdgeCrossing is TRUE. The parameter
+in reconFromSlices for testEdgeCrossing is -i or
+--penalizeintersection.
+
+edgeCrossingPenalty: Numerical value used as a scalar multiplier
+controlling the strength of the penalty for the number of surface
+self-intersections found (and scaled by the surface area of the path
+so far) whenever testEdgeCrossing is TRUE.The default value is 0.1.
+The parameter in reconFromSlices for edgeCrossingPenalty is -I or
+--intersectionmult.
+
+testRepeat: Indicates whether edges that have already appeared in the
+mesh should be explicitly discouraged for new addition by adding a
+penalty term to the cost function. Discouraging repeated edges helps
+to avoid the relatively uncommon problem of mesh pinching (a single
+edge is part of three or more faces), which Fuch's algorithm is
+suceptible to. However, testing for repeated edges increases the
+complexiy of the Fuch's algorithm by a LINEAR factor. The default
+value for testRepeat is FALSE, meaning repeated edges are not tested
+for, except when capping a contour with it's skeleton, when testRepeat
+is set to TRUE since repeated edges are far more common during this
+process. The parameter in reconFromSlices for testRepeat is -e or
+--penalizerepeatededges.
+
+repeatedEdgePenalty: Numerical value used as a scalar multiplier
+controlling the strength of the penalty for the number of repeated
+edges found (and scaled by the surface area of the path so far)
+whenever testRepeat is TRUE. The default value is 0.2. The parameter
+in reconFromSlices for repeatedEdgePenalty is -E or
+--repeatededgemult.
+
+testManhattan: Indicates whether manhattan paths through the Fuch's
+graph should be penalized with a penalty term added for the cost
+function. A manhattan path here is when a path is formed by all
+horizontal steps from the source to the destination column, then all
+vertical steps down from the source to destination row, or vice
+versa. This sort of path results in a topologially incorrect surface
+representation consisting of two cones, and should never be
+allowed. Testing for this condition is efficient, so this parameter
+should not be changed from its default value of TRUE. Thus there is no
+parameter in reconFromSlices to change it.
+
+manhattanPenalty: Numerical value used as a scalar multiplier
+controlling the strength of the penalty added to the cost function
+when a path has taken a mahattan path through the Fuch's graph The
+default value for this parameter is 0.3. There is no parameter in
+reconFromSlices to change manhattanPenalty.
+
+
+
+############################
+
+
+######## REFERENCES #######
+
+Fuchs H, Kedem ZM, and Uselton SP (1977) Communications of the ACM,
+  20(10):693--702.
+
+Hinds, O. P., Polimeni, J. R., Schwartz, E. L., 2006. 
+  Brain surface reconstruction from slice contours [Abstract]. 
+  NeuroImage 31 (1), S445.
+
+############################
+
+$Id: HOWTO,v 1.13 2006/11/01 15:53:52 oph Exp $

@@ -1,0 +1,22 @@
+/*****************************************************************************
+ * tile.extern is the external defs file with functions to tile a surface 
+ * between two slices/contours for libsr
+ * Oliver Hinds <oph@bu.edu> 2005-06-22
+ *
+ *
+ *
+ *****************************************************************************/
+
+extern int skipSlices;
+extern int minSliceInd;
+extern int maxSliceInd;
+extern int savePaths;
+extern int testAngles;
+extern double anglePenalty;
+extern int testRepeat;
+extern double repeatedEdgePenalty;
+extern int testManhattan;
+extern double manhattanPenalty;
+extern int testEdgeCrossing;
+extern double edgeCrossingPenalty;
+extern enum CAPPING_METHOD cappingMethod;

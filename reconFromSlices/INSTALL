@@ -1,0 +1,18 @@
+## INSTALL for reconFromSlices
+## Oliver Hinds <oph@bu.edu>
+## 2006-11-01
+## http://eslab.bu.edu/software
+
+To build reconFromSlices for <os> (where <os> is either linux, win, or
+mac), type
+$ make OS=<os>
+then,
+$ sudo make OS=<os> install
+
+To test reconFromSlices on a slice contour dataset of a macaque V1, execute
+$ reconFromSlices test.slc
+
+This dataset is that used in
+Estarose Wolfson and Eric L. Schwartz.  Computing minimal distances on
+  polyhedral surfaces.  IEEE Transactions on Pattern Analysis and
+  Machine Intelligence, 11(9):1001-1005, Sept 1989.

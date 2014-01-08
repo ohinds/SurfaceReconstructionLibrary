@@ -1,0 +1,108 @@
+William E. Lorensen and Harvey E. Cline, "Marching Cubes: A High
+Resolution 3D Surface Construction Algorithm", Computer Graphics
+(Proceedings of SIGGRAPH '87), Vol. 21, No. 4, pp. 163-169.
+
+W. A. Barrett and E. N. Mortensen. Fast, accurate, and reproducible
+live-wire boundary extraction. Lecture Notes in Computer Science,
+1131:183\u2013192, 1996.
+
+G. Borgefors. Distance transformations in digital images. Computer
+Vision, Graphics, and Image Processing, 34:344\u2013371, 1986.
+
+* S.-Y. Chen, W.-C. Lin, C.-C. Liang, and C.-T. Chen. Improvement on
+dynamic elastic interpolation technique for reconstructing 3-D objects
+from serial cross sections. IEEE Transactions on Medical Imaging,
+9(1):71\u201383, 1990
+
+C. R. Dance. Computing Models from 3D Ultrasound. PhD thesis,
+University of Cam- bridge, 1996
+
+* G. T. Herman, J. Zheng, and C. A. Bucholtz. Shape-based
+interpolation. IEEE Computer Graphics and Applications, pages
+69\u201379, May 1992.
+
+M. Kass, A. Witkin, and D. Terzopoulos. Snakes \u2014 active contour
+models. International Journal of Computer Vision, 1(4):321\u2013331,
+1987
+
+D. Levin. Multidimensional reconstruction by set-valued
+approximations. IMA Journal of Numerical Analysis, 6:173\u2013184,
+1986.
+
+J-M Oliva, M. Perrin, and S. Coquillart. 3D reconstruction of complex
+polyhedral shapes from contours using a simplified generalized
+Voron¨oi diagram. Computer Graphics Forum,
+15(3):C\u2013397\u2013C\u2013408, 1996.
+
+* S. P. Raya and J. K. Udupa. Shape-based interpolation of
+multidimensional objects.  IEEE Transactions on Medical Imaging,
+9(1):32\u201342, 1990.
+
+V. V. Savchenko, A. A. Pasko, O. G. Okunev, and T. L. Kunii. Function
+representation of solids reconstructed from scattered surface points
+and contours. Computer Graphics Forum, 14(4):181\u2013188, 1995.
+
+G. M. Treece, R. W. Prager, A. H. Gee, and L. Berman. Fast surface and
+volume estimation from non-parallel cross-sections, for freehand 3-D
+ultrasound. Medical Image Analysis, 3(2):141\u2013173, 1999.
+
+http://library.wolfram.com/infocenter/Articles/3007/ Surface
+Reconstruction from Parallel Serial Sections Using the Program
+Mathematica: Example and Source Code -- from Mathematica Information
+Center
+
+http://www.vet.purdue.edu/cpr/bsd/3Dviz.html Three-dimensional
+computer reconstruction
+
+http://64.233.161.104/search?q=cache:Vbr4zLWikxQJ:herakles.zcu.cz/publications/download.php%3FID%3D31%26cite%3DSvitak-ECI-04+%22surface+reconstruction%22+%22serial+sections%22&hl=en
+Robust Surface Reconstruction from Orthogonal Slices
+
+http://www.amazon.com/exec/obidos/tg/detail/-/081763973X/qid=1119648332/sr=8-1/ref=sr_8_xs_ap_i1_xgl14/002-4777922-9441612?v=glance&s=books&n=507846
+http://www.sintef.no/static/am/Geom/siscat/ssdemo/medical/#demo1
+Surface reconstruction from medical data
+
+http://csdl2.computer.org/persagen/DLAbsToc.jsp?resourcePath=/dl/proceedings/&toc=comp/proceedings/wacv/1998/8606/00/8606toc.xml&DOI=10.1109/ACV.1998.732871
+wacv,4th IEEE Workshop on Applications of Computer Vision (WACV'98)
+
+http://portal.acm.org/citation.cfm?id=617928 Surface Reconstruction by
+Multiaxial Triangulation
+
+http://iris.usc.edu/Vision-Notes/bibliography/stereo430.html Keith
+Price Bibliography Shape Descriptions Computed from a Set of Slices
+
+http://www.sintef.no/static/AM/geom/sisl/medical/
+http://www.sintef.no/static/AM/Geom/siscat/index.html Surface
+reconstruction from medical data
+
+http://biocomp.stanford.edu/3dreconstruction/refs/ Reconstruction Home
+Page
+
+http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=2606396&dopt=Abstract
+Entrez PubMed
+
+http://64.233.161.104/search?q=cache:E2yBCFivJqAJ:mi.eng.cam.ac.uk/reports/svr-ftp/treece_tr342.pdf+%22surface+reconstruction%22+%22serial+sections%22&hl=en
+Surface interpolation from sparse cross-sections using region
+correspondence G.M. Treece, R.W. Prager, A.H. Gee and L. Berman
+
+http://www.cg.tuwien.ac.at/studentwork/CESCG/CESCG-2001/SBiasotti/
+Topological techniques for shape understanding
+
+http://www.zib.de/Visual/projects/bicgh/bicghlong.en.html Recognition
+and analysis of spatio-temporal developmental patterns
+
+http://csdl2.computer.org/persagen/DLAbsToc.jsp?resourcePath=/dl/mags/cg/&toc=comp/mags/cg/1991/06/g6toc.xml&DOI=10.1109/38.103393
+IEEE Computer Graphics and Applications,November/December 1991
+(Vol. 11, No. 6)
+
+http://www-sop.inria.fr/epidaure/BIBLIO/Author/BARDINET-E.html
+Publications of <89>ric Bardinet
+
+http://64.233.161.104/search?q=cache:z4XPd9EbnZYJ:students.cs.byu.edu/~tom/papers/final.pdf+%22surface+reconstruction%22+%22serial+sections%22&hl=en
+Triangulationof Branching Contours using Area Minimization
+1. Introduction P Q P Q
+
+http://mrl.nyu.edu/~dt/ Demetri Terzopoulos - Home Page
+
+http://64.233.161.104/search?q=cache:5VJtWASoDskJ:www.crs4.it/vic/data/papers/vissym01-brain.pdf+%22surface+reconstruction%22+%22serial+sections%22&hl=en
+Three-dimensional Reconstruction and Visualization of the Cerebral
+Cortex in Primates

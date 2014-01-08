@@ -1,0 +1,9 @@
+extern int correspondenceNumMeans;
+enum CORRESPONDENCE_METHOD correspondenceMethod;
+enum CORRESPONDENCE_SCOPE correspondenceScope;
+
+extern float minPercentile;
+extern float maxPercentile;
+
+extern int saveContourDistances;
+extern char contourDistancesFilename[];

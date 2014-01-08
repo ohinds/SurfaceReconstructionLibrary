@@ -1,0 +1,7 @@
+extern int resample;
+extern double resampleDistance;
+extern double lastResampleDist;
+extern int resampleAbs;
+extern int resampleEqual;
+extern int SR_VERBOSE;
+
