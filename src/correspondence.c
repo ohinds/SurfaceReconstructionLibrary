@@ -121,7 +121,7 @@ int buildCorrespondenceGuessGlobal(list *slices) {
     *ms = newList(LIST),
     *ns = newList(LIST);
 
-  
+
   long m,n;
   double connectionThreshold = SR_BIG, **dm;
 
@@ -149,7 +149,7 @@ int buildCorrespondenceGuessGlobal(list *slices) {
 
     /* store the distance matrix for the two slices */
     enqueue(dms,getContourDistanceMatrix(thisSlice, nextSlice, &m, &n));
-    
+
     enqueue(ms,(int*)m); /* WATCH OUT, THE INTEGER VALUES ARE */
     enqueue(ns,(int*)n); /* USED AS POINTERS! */
   }
@@ -223,7 +223,6 @@ void setAdjacentContours(list *slices, double correspondenceThreshold,
   list *thisSlice, *nextSlice;
   contour *c1,*c2;
   int indi,indj,indk;
-  long m,n;
   double **dm;
 
   /* for each pair of slices, connect the contours with below threshold dist */
@@ -258,8 +257,6 @@ void setAdjacentContours(list *slices, double correspondenceThreshold,
     }
 
     dm = (double**) dmln->data;
-    m = (long) mln->data; /* TREATING POINTERS AS INTEGERS ON PURPOSE */
-    n = (long) nln->data;
 
     /* connect all contours with below threshold distances */
     for(j = getListNode(thisSlice,0), indj=0; j; j=(listNode*) j->next, indj++) {
@@ -566,7 +563,7 @@ double getGlobalConnectionThresholdDensity(list *dms, list *ms, list *ns) {
   for(i = 1; i < n; i++) {
     if(!isnan(slope[i-1]) && !isnan(slope[i])
 	      && slope[i-1] < 0 && slope[i] >= 0) {
-      connectionThreshold = x[i-1] 
+      connectionThreshold = x[i-1]
 	- slope[i-1]*(x[i-1]-x[i])/(slope[i-1]-slope[i]);
       //      connectionThreshold *= 1.5; // DELETE ME
       break;
@@ -574,7 +571,7 @@ double getGlobalConnectionThresholdDensity(list *dms, list *ms, list *ns) {
   }
 
   //if(SR_DEBUG) {
-  //fprintf(stderr,"connection threshold = %lf\n", connectionThreshold);  
+  //fprintf(stderr,"connection threshold = %lf\n", connectionThreshold);
   //}
 
   /* free stuff*/
@@ -1040,7 +1037,7 @@ double getContoursDist(contour *cont1, contour *cont2, double *mindist) {
   /* iterate over vertices of the first contour, finding the minimum
      distance to the other contour
      */
-  for(i = getListNode(cont1->vertices,0), ind = 0; i; 
+  for(i = getListNode(cont1->vertices,0), ind = 0; i;
       i = (listNode*) i->next, ind++) {
     u = (vertex*) i->data;
     distArr[ind] = getDistanceToContour(cont2,u);

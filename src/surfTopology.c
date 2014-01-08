@@ -304,7 +304,7 @@ void topoFixer(surface *surf) {
 //    }
 //  }
 
-  
+
   // find errors and fix by duplicating a vertex
   buildNTaE(surf);
   for(i = 0; i < V; i++) {
@@ -327,7 +327,7 @@ list *getBoundaries(surface *s) {
 
 // NOTES on algorithm:
 //
-// 1) we assume that every vertex is either interior w/ 
+// 1) we assume that every vertex is either interior w/
 // NNoV - NTaV = 0, or a boundary vertex with NNoV - NTaV = 1.
 //
 // 2) consistentOrientation means Neighbors is such that a vertex is
@@ -360,15 +360,15 @@ list *getBoundaries(surface *s) {
   listNode *ln;
   list *boundaries = newList(LIST);
   list *curBoundary;
-  long i, n0, n1, n2, n, ni, found, tmp;
+  long i, n0, n1, n2, ni, found, tmp;
   int *indivMap;
 
   listNode *comp;
   // go through each connected component, find its boundaries
   for(comp = getListNode(s->CC,0); comp; comp = (listNode*) comp->next) {
-    // bN contains the labels of all the boundary vertices 
+    // bN contains the labels of all the boundary vertices
     list *bN = newList(LIST);
-    
+
     // get the vertex indices in this connected component
     indivMap = neighborhood(s,(long)comp->data);
     for(i = 0; i < s->numVertices; i++) {
@@ -382,10 +382,8 @@ list *getBoundaries(surface *s) {
       continue;
     }
 
-    n = listSize(bN);
-
     while(listSize(bN) > 0) {
-  
+
       ln = pop(bN);
       n0 = (long) ln->data;
       free(ln);
@@ -414,7 +412,7 @@ list *getBoundaries(surface *s) {
 	    break;
 	  }
 	}
-	
+
 	if(!found) {
 	  break;
 	}
@@ -424,11 +422,11 @@ list *getBoundaries(surface *s) {
 	// Otherwise, then we would have to search through the neighbors of
 	// n_1 for another vertex on the boundary (but other than the one
 	// prior to n_1)
-    
+
 	//printf("n0=%d n1=%d n2=%d\n",n0,n1,n2);
 
 //	if(n2 == n0) {
-//	
+//
 //	  break;
 //	}
 //	else {
@@ -1373,7 +1371,7 @@ void cutNonmanifoldVertex(surface *s, int v) {
     ln = getListNode(star,0);
     while(ln) {
       se = (staredge*) ln->data;
-      
+
       // try to match an end to an edge node
       if(se->edge[0] == ends[0]) {
 	si = 0;
@@ -1397,7 +1395,7 @@ void cutNonmanifoldVertex(surface *s, int v) {
 	continue;
       }
 
-      // make sure the connecting edge is a manifold edge	
+      // make sure the connecting edge is a manifold edge
       if(s->NTaE[v][se->neighborIndex[si]] < 3) {
 	ends[si] = se->edge[ei];
 	enqueue(curComp,se);
@@ -1416,17 +1414,17 @@ void cutNonmanifoldVertex(surface *s, int v) {
 	ln = (listNode*) ln->next;
 	i++;
       }
-     
+
     }
   }
-  
+
   // duplicate vertex n-1 times
   for(ln = (listNode*) getListNode(compList,0)->next; ln; ln = (listNode*) ln->next) {
     vi = s->numVertices;
 
     // duplicate the vertex and adjust the face references
     addVertexArr(s,s->vertices[v]);
-    
+
     curComp = (list*) ln->data;
     for(ln2 = getListNode(curComp,0); ln2; ln2 = (listNode*) ln2->next) {
       f = ((staredge*) ln2->data)->face;
@@ -1439,7 +1437,7 @@ void cutNonmanifoldVertex(surface *s, int v) {
 
     // update topo-fields in surf struct
     preprocessSurf(s);
-    
+
     freeListAndData(curComp);
   }
 
@@ -1563,7 +1561,7 @@ void buildNTaE(surface *s) {
  * vertices in each connected component
  */
 void buildConnectedComponents(surface *surf) {
-  if(surf == NULL || surf->numVertices < 1 
+  if(surf == NULL || surf->numVertices < 1
      || surf->manifoldness == SURF_UNKNOWN) {
     return;
   }
@@ -1612,14 +1610,14 @@ void buildConnectedComponents(surface *surf) {
  * modified from the surface geometry toolbox
  */
 int *neighborhood(surface *surf, int n0) {
-  if(surf == NULL || surf->numVertices < 1 
+  if(surf == NULL || surf->numVertices < 1
      || surf->manifoldness == SURF_UNKNOWN) {
     return NULL;
   }
-  
-  int i, j, nB, V = surf->numVertices;  
+
+  int i, j, nB, V = surf->numVertices;
   int *Q, Qstart = 0, Qend = 0, Qempty = 1;
-  
+
   /* Initiaize nbd */
   int *nbd = (int*) malloc(V*sizeof(int));
   for(i = 0; i < V; i++)
@@ -1628,18 +1626,18 @@ int *neighborhood(surface *surf, int n0) {
 
   /* Initialize Q */
   Q = (int*) malloc( V*sizeof(int) );
-  
+
   /* Put n0 on the Q */
   Q[ Qend ] = n0;
   Qend++;
   Qempty = 0;
-  
+
   while( !Qempty )
-    { 
+    {
       /* pop vertex i from Q */
       i = Q[ Qstart ];
       Qstart++;
-      
+
       /* Go all the way around i */
       for(j = 0; j < surf->NNoV[i]; j++)
 	{
@@ -1649,24 +1647,24 @@ int *neighborhood(surface *surf, int n0) {
 	  if( nbd[nB] == -1 )
 	    {
 	      /* 1) set nbd of vertex nB */
-	      nbd[nB] = nbd[i] + 1;	    
-	      
+	      nbd[nB] = nbd[i] + 1;
+
 	      /* 2) put vertex nB on Q */
 	      Q[ Qend ] = nB;
 	      Qend++;
 	      Qempty = 0;
-	  
+
 	    } /* Matches: if nB has not been hit */
 
 	} /* Gone all the way around i */
-      
+
       /* Check for Q empty condition */
       if( Qend == Qstart )
 	Qempty = 1;
 
     } /* Matches while( !Qempty ) */
 
-  
+
   free(Q);
 
   return nbd;

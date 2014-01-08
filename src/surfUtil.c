@@ -370,7 +370,7 @@ int addVertexCoordNoDuplicate(surface *surf, double x, double y, double z, doubl
 	  surf->vertexBoundaryness[index] != BRANCHED_BOUNDARY) {
     surf->vertexBoundaryness[index] = BRANCHED_BOUNDARY;
   }
-  else if(boundary == BOUNDARY 
+  else if(boundary == BOUNDARY
 	  && surf->vertexBoundaryness[index] != BOUNDARY) {
     surf->vertexBoundaryness[index] = BOUNDARY;
   }
@@ -544,12 +544,12 @@ surface *buildSurfaceFromFaceList(list *faceList) {
 /*     } */
 /*     if(verticesEqual(f->left->v1,f->right->v1)) { */
 /*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v2))) { */
-/* 	v3 = addVertexStruct(surf,f->right->v2); */
+/*      v3 = addVertexStruct(surf,f->right->v2); */
 /*       } */
 /*     } */
 /*     else { */
 /*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v1))) { */
-/* 	v3 = addVertexStruct(surf,f->right->v1); */
+/*      v3 = addVertexStruct(surf,f->right->v1); */
 /*       } */
 /*     } */
 
@@ -930,7 +930,7 @@ void markAVertexAsBoundarySlice(list *slice) {
   if(slice == NULL || listSize(slice) < 1) {
     return;
   }
-  
+
   listNode* ln;
   for(ln = getListNode(slice,0); ln; ln = (listNode*) ln->next) {
     markAVertexAsBoundary((contour*) ln->data);
@@ -1037,7 +1037,7 @@ void fillHoles(surface *surf, int numHolesLeft) {
     numVB[i] = listSize((list*) ln->data);
   }
   gsl_sort_int_index(sortedVB,numVB,1,listSize(boundaries));
-  
+
   // fill the desireded boundaries
   for(i = 0; i < listSize(boundaries)-numHolesLeft; i++) {
     if(SR_VERBOSE) {
@@ -1047,7 +1047,7 @@ void fillHoles(surface *surf, int numHolesLeft) {
     add3DPolyToSurf(surf,(list*)getListNode(boundaries,sortedVB[i])->data);
   }
   freeListAndData(boundaries);
-  
+
   if(SR_VERBOSE) {
     boundaries = getBoundaries(surf);
     fprintf(stdout,"surface now has %d boundaries\n",
@@ -1118,7 +1118,7 @@ void fillBranchedHoles(surface *surf) {
 	break;
       }
     }
-    
+
     // test if we found none
     if(ln2 != NULL) {
       freeList(boundary);
@@ -1133,7 +1133,7 @@ void fillBranchedHoles(surface *surf) {
     freeList(boundary);
   }
   freeList(boundaries);
-  
+
   preprocessSurf(surf);
   if(surf->manifoldness == SURF_MANIFOLD) {
     if(SR_VERBOSE) {
@@ -1155,7 +1155,7 @@ void fillBranchedHolesOld(list *contourPairs, surface *surf) {
 
   list *plist;
   listNode *i,*j;
-  int c1n, c2n, oc1n, oc2n, foundSeat;
+  int c1n, c2n, oc1n, oc2n;
   vertex *c10, *c1e, *c20, *c2e, *oc10, *oc1e, *oc20, *oc2e;
   contourPair *cp, *ocp;
   contour *c1, *c2, *oc1, *oc2;
@@ -1170,7 +1170,6 @@ void fillBranchedHolesOld(list *contourPairs, surface *surf) {
       // two cases:
 
       // one: the seat of the pants
-      foundSeat = 0;
       for(j = (listNode*) i->next; j; j = (listNode*) j->next) {
 	ocp = (contourPair*) j->data;
 
@@ -1199,8 +1198,8 @@ void fillBranchedHolesOld(list *contourPairs, surface *surf) {
           c10 = (vertex*) getListNode(c1->vertices,0)->data;
           c1e = (vertex*) getListNode(c1->vertices,c1n-1)->data;
           c20 = getAdjacentVertex(surf, c10,
-    			(vertex*) getListNode(c2->vertices,0)->data,
-    			(vertex*) getListNode(c2->vertices,c2n-1)->data);
+                        (vertex*) getListNode(c2->vertices,0)->data,
+                        (vertex*) getListNode(c2->vertices,c2n-1)->data);
           c2e = (c20 == (vertex*) getListNode(c2->vertices,0)->data)
 	    ? (vertex*) getListNode(c2->vertices,c2n-1)->data
 	    : (vertex*) getListNode(c2->vertices,0)->data;
@@ -1384,7 +1383,7 @@ void add3DPolyToSurf(surface *surf, list *plist) {
   int *vlist = (int*) malloc(n*sizeof(int));
   vector **W = (vector**) malloc(n*sizeof(vector*));
   int **lambda = (int**) malloc(n*sizeof(int*));
-  int i,j,k,m,allBoundaries = 1;
+  int i,j,k,m;
   long tmp;
   listNode *ln;
   vector *curCost;
@@ -1394,9 +1393,6 @@ void add3DPolyToSurf(surface *surf, list *plist) {
     vlist[i] = (int) tmp;
     W[i] = (vector*) malloc(n*sizeof(vector));
     lambda[i] = (int*) malloc(n*sizeof(int));
-    if(surf->vertexLabels[vlist[i]] == -1) {
-      allBoundaries = 0;
-    }
   }
 
   // initialize W
@@ -1429,12 +1425,12 @@ void add3DPolyToSurf(surface *surf, list *plist) {
 	curCost->y += W[i][m].y + W[m][k].y;
 	//fprintf(stdout,"%d %d %d %g\n", i, k, m, curCost->x);
 
-	if(curCost->x < W[i][k].x 
-	   || (fabs(curCost->x - W[i][k].x) < SR_TOL 
+	if(curCost->x < W[i][k].x
+	   || (fabs(curCost->x - W[i][k].x) < SR_TOL
 	       && curCost->y < W[i][k].y)) {
 	  W[i][k] = *curCost;
 	  lambda[i][k] = m;
-	  
+
 	}
 	free(curCost);
       }
@@ -1456,10 +1452,10 @@ void add3DPolyToSurf(surface *surf, list *plist) {
 
 /**
  * recursively trace a poly boundary to recover an optimal tiling
- */ 
+ */
 void tracePolyBoundary(surface *surf, int **lambda, int *vlist, int i, int k) {
   int o;
-  
+
   if(i+2 == k) {
     addFaceInd(surf,vlist[i],vlist[i+1],vlist[k]);
     preprocessSurf(surf);
@@ -1509,39 +1505,39 @@ vector *getPolyTilingTriangleCost(surface *surf, int v1, int v2, int v3) {
 		 &norm1);
   n = findIndex(surf->Neighbors[v1],surf->NNoV[v1],v2);
   if(n > -1) {
-    f = surf->faces[surf->LT1aNE[v1][n] == -1 
+    f = surf->faces[surf->LT1aNE[v1][n] == -1
 		    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
     getFaceNormalV(surf->vertices[f[0]],
 		   surf->vertices[f[1]],
 		   surf->vertices[f[2]],
 		   &norm2);
-    if(-dot(norm1,norm2) > cost->x) {      
+    if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
   }
 
   n = findIndex(surf->Neighbors[v1],surf->NNoV[v1],v3);
   if(n > -1) {
-    f = surf->faces[surf->LT1aNE[v1][n] == -1 
+    f = surf->faces[surf->LT1aNE[v1][n] == -1
 		    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
     getFaceNormalV(surf->vertices[f[0]],
 		   surf->vertices[f[1]],
 		   surf->vertices[f[2]],
 		   &norm2);
-    if(-dot(norm1,norm2) > cost->x) {      
+    if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
   }
 
   n = findIndex(surf->Neighbors[v2],surf->NNoV[v2],v3);
   if(n > -1) {
-    f = surf->faces[surf->LT1aNE[v2][n] == -1 
+    f = surf->faces[surf->LT1aNE[v2][n] == -1
 		    ? surf->LT2aNE[v2][n] : surf->LT1aNE[v2][n]];
     getFaceNormalV(surf->vertices[f[0]],
 		   surf->vertices[f[1]],
 		   surf->vertices[f[2]],
 		   &norm2);
-    if(-dot(norm1,norm2) > cost->x) {      
+    if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
   }
@@ -1728,7 +1724,7 @@ list *triangulateContour(contour *c) {
   int i;
   double z;
 
-  
+
 
   /* create the filenames */
   static int calls = 0;
@@ -1957,9 +1953,9 @@ int edgeFaceIntersect(face *f, edge *e) {
 /*  * the end points of two two dimensional segments */
 /*  *\/ */
 /* int segmentsIntersect2d(float x00, float y00,  */
-/* 			float x01, float y01,  */
-/* 			float x10, float y10,  */
-/* 			float x11, float y11) { */
+/*                      float x01, float y01,  */
+/*                      float x10, float y10,  */
+/*                      float x11, float y11) { */
 
 /*   Vector    u = S1.P1 - S1.P0; */
 /*   Vector    v = S2.P1 - S2.P0; */
@@ -1977,19 +1973,19 @@ int edgeFaceIntersect(face *f, edge *e) {
 /*     float dv = dot(v,v); */
 /*     if (du==0 && dv==0) {           // both segments are points */
 /*       if (S1.P0 != S2.P0)         // they are distinct points */
-/* 	return 0; */
+/*      return 0; */
 /*       *I0 = S1.P0;                // they are the same point */
 /*       return 1; */
 /*     } */
 /*     if (du==0) {                    // S1 is a single point */
 /*       if (inSegment(S1.P0, S2) == 0)  // but is not in S2 */
-/* 	return 0; */
+/*      return 0; */
 /*       *I0 = S1.P0; */
 /*       return 1; */
 /*     } */
 /*     if (dv==0) {                    // S2 a single point */
 /*       if (inSegment(S2.P0, S1) == 0)  // but is not in S1 */
-/* 	return 0; */
+/*      return 0; */
 /*       *I0 = S2.P0; */
 /*       return 1; */
 /*     } */

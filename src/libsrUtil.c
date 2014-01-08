@@ -224,7 +224,7 @@ void deleteEmptySlices(list *slices) {
 	break;
       }
     }
-    
+
     // delete all contours if empty
     if(!found) {
       for(cont = getListNode((list*)slice->data,0); cont;
@@ -234,7 +234,7 @@ void deleteEmptySlices(list *slices) {
       freeList((list*)slice->data);
       markForDeletion(slice);
     }
-    
+
   }
 
   deleteMarkedNodes(slices);
@@ -247,7 +247,7 @@ double getAverageIntersliceDistance(list *slices) {
   listNode *cur, *last;
   double curDist,sum = 0.0;
   int n = 0;
-  
+
   for(last = getListNode(slices,0), cur = getListNode(slices,1); last && cur;
       last = cur, cur = (listNode*) cur->next) {
     curDist = getIntersliceDistance((list*) cur->data, (list*) last->data);
@@ -267,11 +267,11 @@ double getIntersliceDistance(list *curSlice, list *lastSlice) {
   listNode *i;
   contour *lastFirst = NULL, *curFirst = NULL;
 
-  if(curSlice == NULL || listSize(curSlice) < 1 
+  if(curSlice == NULL || listSize(curSlice) < 1
      || lastSlice == NULL || listSize(lastSlice) < 1) {
     return 0.0;
   }
-  
+
   for(i = getListNode(lastSlice,0); i; i = (listNode*) i->next) {
     lastFirst = (contour*) i->data;
 
@@ -287,13 +287,13 @@ double getIntersliceDistance(list *curSlice, list *lastSlice) {
       break;
     }
   }
-  
+
   if((lastFirst == NULL || listSize(lastFirst->vertices) < 1)
      || (curFirst == NULL || listSize(curFirst->vertices) < 1)) {
     return 0.0;
   }
 
-  return fabs(((vertex*) getListNode(curFirst->vertices,0)->data)->z 
+  return fabs(((vertex*) getListNode(curFirst->vertices,0)->data)->z
 	      - ((vertex*) getListNode(lastFirst->vertices,0)->data)->z);
 }
 
@@ -322,7 +322,7 @@ int preprocessSliceContours(list *slices) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"deleting empty slices\n");
-  }  
+  }
   deleteEmptySlices(slices);
 
   if(SR_VERBOSE) {
@@ -556,7 +556,7 @@ int selectVerticesBetween(list *vertices) {
 vertex *createVertex() {
   vertex *v = (vertex*) malloc(sizeof(vertex));
 
-  if(v == NULL) return NULL; 
+  if(v == NULL) return NULL;
 
   v->x = 0.0f;
   v->y = 0.0f;
@@ -599,7 +599,7 @@ vertex *copyVertex(vertex *v) {
   return newV;
 }
 
-/** 
+/**
  * gets a new vertex that is the midpoint between two vertices
  */
 vertex *getMidpoint(vertex *v1, vertex *v2) {
@@ -609,7 +609,7 @@ vertex *getMidpoint(vertex *v1, vertex *v2) {
   m->x+=0.5*(v2->x-v1->x);
   m->y+=0.5*(v2->y-v1->y);
   m->z+=0.5*(v2->z-v1->z);
-  
+
   return m;
 }
 
@@ -650,7 +650,7 @@ void resampleContourByDistance(contour *cont, double distance) {
   list *verts = cont->vertices;
   list *newVerts = newList(LIST);
   listNode *v;
-  vertex *vert,*prev,*newVert;  
+  vertex *vert,*prev,*newVert;
 
   newVert = prev = (vertex*) getListNode(verts,0)->data;
   enqueue(newVerts,copyVertex(prev));
@@ -763,27 +763,24 @@ void deleteRepeatedContourVerts(list *slices) {
   listNode *slice, *cont;
   list *verts;
   listNode *vert;
-  vertex *v;
-  vertex *prev = NULL, *prevprev = NULL;
+  vertex *prev = NULL;
   int i;
 
   /* delete repeated vertices  */
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
 	cont = (listNode*) cont->next) {
-      prevprev = prev = NULL;
+      prev = NULL;
       verts = ((contour*)cont->data)->vertices;
       if(listSize(verts) < 2) continue;
 
       for(vert = getListNode(verts,0), i = 0; vert;
 	  vert = (listNode*) vert->next, i++) {
-	v = (vertex*) vert->data;
 
 	if(verticesEqual((vertex*)vert->data,prev)) {
 	  markForDeletion(vert);
 	}
 	else {
-	  prevprev = prev;
 	  prev = (vertex*)vert->data;
 	}
       }
@@ -836,11 +833,11 @@ void randomizeClosedContourIndexing(list *slices) {
 	cont = (listNode*) cont->next) {
       c = (contour*) cont->data;
 
-      if(c == NULL || c->vertices == NULL || listSize(c->vertices) < 2 
+      if(c == NULL || c->vertices == NULL || listSize(c->vertices) < 2
 	 || c->closed != CLOSED) {
 	continue;
       }
-      
+
       verts = c->vertices;
       ind = rand()/(LONG_MAX/listSize(verts)-1);
       split = splitList(verts,ind);
@@ -879,31 +876,26 @@ void labelBoundaries(list *slices) {
   listNode *slice, *cont, *vert;
   list *verts;
 
-  int first = 1, last = 0;
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
-    if(slice->next == NULL) last = 1;
-
     for(cont = getListNode((list*)slice->data,0); cont;
 	cont = (listNode*) cont->next) {
       verts = ((contour*)cont->data)->vertices;
 
       if(listSize(verts) < 1) continue;
 
-//      if(((contour*)cont->data)->closed == CLOSED && (!first && !last) && 
+//      if(((contour*)cont->data)->closed == CLOSED && (!first && !last) &&
 
-      ((vertex*) getListNode(verts,0)->data)->boundary 
+      ((vertex*) getListNode(verts,0)->data)->boundary
 	= ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
 
-      for(vert = getListNode(verts,1); vert && vert->next; 
+      for(vert = getListNode(verts,1); vert && vert->next;
 	  vert = (listNode*) vert->next) {
 	((vertex*)vert->data)->boundary = INTERIOR;
       }
 
-      ((vertex*) getListNode(verts,listSize(verts)-1)->data)->boundary 
+      ((vertex*) getListNode(verts,listSize(verts)-1)->data)->boundary
 	= ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
     }
-
-    first = 0;
   }
 }
 
@@ -1382,4 +1374,3 @@ void printPath(FILE* fp, path *p) {
  * comment-column: 0
  * End:
  ********************************************************************/
-
