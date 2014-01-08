@@ -17,7 +17,7 @@
 
 #ifdef SR_DEBUG_FLAG
 #define SR_DEBUG 1
-#else 
+#else
 #define SR_DEBUG 0
 #endif
 
@@ -123,7 +123,7 @@ typedef struct {
   double binSize;
 
   int *hist;
-  
+
   double minval;
   double maxval;
 } histogram;
@@ -141,14 +141,14 @@ enum BRANCHDIRECTION {FORWARD, BACKWARD};
 
 typedef struct {
   /* 1D list of vertices making up the contour */
-  list *vertices; 
-  
+  list *vertices;
+
   /* whether this contour is closed or not */
-  int closed; 
+  int closed;
 
   /* list of the contours on the next slice that this one is connected to */
-  list *adjacentContours; 
-  list *adjacentBackwardContours; 
+  list *adjacentContours;
+  list *adjacentBackwardContours;
 
   struct contour *origin;
 } contour;
@@ -177,9 +177,9 @@ enum CAPPING_METHOD {NO_CAPPING, TRIANGULATE, TILE_SKELETON, TILE_POINT};
 typedef struct {
   list *faceList; /* faces in path */
   double cost;    /* cost of the path with all terms */
-  double baseCost;/* base cost of the path (usually surface area) 
-		   * keep this around so we can penalize based on 
-		   * surface area, not on previously applied penalties */
+  double baseCost;/* base cost of the path (usually surface area)
+                   * keep this around so we can penalize based on
+                   * surface area, not on previously applied penalties */
 } path;
 
 /* include the heap header here for its element declarations */
@@ -210,11 +210,11 @@ enum SURFACE_FORMAT {INVALID_SURFACE_FORMAT, OFF, OBJ, MGHSURF};
 enum SURACE_MANIFOLDNESS_STATE {SURF_NON_MANIFOLD, SURF_MANIFOLD, SURF_UNKNOWN};
 
 /* vertex manifoldness state */
-enum VERTEX_MANIFOLDNESS_STATE {VERT_MANIFOLD, 
-				VERT_MORE_THAN_TWO_TRIS_AT_EDGE_ERROR,
-				VERT_CONE_ERROR,
-				VERT_TWO_HOLE_ERROR,
-				VERT_UNKNOWN};
+enum VERTEX_MANIFOLDNESS_STATE {VERT_MANIFOLD,
+                                VERT_MORE_THAN_TWO_TRIS_AT_EDGE_ERROR,
+                                VERT_CONE_ERROR,
+                                VERT_TWO_HOLE_ERROR,
+                                VERT_UNKNOWN};
 
 /** star edge for topo fixing **/
 typedef struct {
@@ -251,22 +251,22 @@ typedef struct {
 
   /* topology data */
   int *NTaV;                // number of triangles at vertex
-  int **LTaV;		    // label of triangles at vertex
-  int **v1TaV;		    // first other vertex at triangle at vertex
-  int **v2TaV;		    // second other vertex at triangle at vertex
-  int *NNoV;		    // number of neighbors of vertex
+  int **LTaV;       // label of triangles at vertex
+  int **v1TaV;        // first other vertex at triangle at vertex
+  int **v2TaV;        // second other vertex at triangle at vertex
+  int *NNoV;        // number of neighbors of vertex
   int maxNTaV;              // max number or triangles at any vertex
-  int E;		    // number of edges
-  int **Neighbors;	    // neighbors of vertex
-  int **NTaE;		    // number of triangles at each edge 
-  int **LT1aNE;		    // label of the first triangle at neighbor edge
-  int **LT2aNE;		    // label of the second triangle at neighbor edge
-  int manifoldness;	    // manifoldness state
+  int E;        // number of edges
+  int **Neighbors;      // neighbors of vertex
+  int **NTaE;       // number of triangles at each edge
+  int **LT1aNE;       // label of the first triangle at neighbor edge
+  int **LT2aNE;       // label of the second triangle at neighbor edge
+  int manifoldness;     // manifoldness state
   int *vertexManifoldness;  // array of vertex manifoldness state
   int **OT;                 // opposite triangle
   int **OV;                 // opposite vertex
   list *CC;                 // list containing one vertex from each
-			    // connected component
+  // connected component
 } surface;
 
 #endif

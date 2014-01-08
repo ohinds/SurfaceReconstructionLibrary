@@ -16,18 +16,18 @@
  */
 surface *readSurface(char *filename, enum SURFACE_FORMAT format) {
   switch(format) {
-  case OFF:
-    return readOFF(filename);
-    break;
-  case OBJ:
-    return readOBJ(filename);
-    break;
-  case MGHSURF:
-    return readMGHsurf(filename);
-    break;
-  default:
-    fprintf(stderr,"readSurface(): unsupported format\n");
-    break;
+    case OFF:
+      return readOFF(filename);
+      break;
+    case OBJ:
+      return readOBJ(filename);
+      break;
+    case MGHSURF:
+      return readMGHsurf(filename);
+      break;
+    default:
+      fprintf(stderr,"readSurface(): unsupported format\n");
+      break;
   }
 
   return NULL;
@@ -38,18 +38,18 @@ surface *readSurface(char *filename, enum SURFACE_FORMAT format) {
  */
 int writeSurface(surface *surf, char *filename, enum SURFACE_FORMAT format) {
   switch(format) {
-  case OFF:
-    return writeOFF(surf,filename);
-    break;
-  case OBJ:
-    return writeOBJ(surf,filename);
-    break;
-  case MGHSURF:
-    return writeMGHsurf(surf,filename);
-    break;
-  default:
-    fprintf(stderr,"writeSurface(): unsupported format\n");
-    break;
+    case OFF:
+      return writeOFF(surf,filename);
+      break;
+    case OBJ:
+      return writeOBJ(surf,filename);
+      break;
+    case MGHSURF:
+      return writeMGHsurf(surf,filename);
+      break;
+    default:
+      fprintf(stderr,"writeSurface(): unsupported format\n");
+      break;
   }
 
   return SR_FAILURE;
@@ -78,7 +78,7 @@ surface *readOFF(char* filename) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"reading off file %s with %d vertices and %d faces...",
-	    filename,numVerts,numFaces);
+            filename,numVerts,numFaces);
   }
 
   /* create a surface */
@@ -133,7 +133,7 @@ int writeOFF(surface *surf, char *filename) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"writing off file %s with %d vertices and %d faces...",
-	    filename,surf->numVertices,surf->numFaces);
+            filename,surf->numVertices,surf->numFaces);
   }
 
   /* write the header */
@@ -142,17 +142,17 @@ int writeOFF(surface *surf, char *filename) {
   /* write all the vertices */
   for(i = 0; i < surf->numVertices; i++) {
     fprintf(fp,"%f %f %f\n",
-	    surf->vertices[i][SR_X],
-	    surf->vertices[i][SR_Y],
-	    surf->vertices[i][SR_Z]);
+            surf->vertices[i][SR_X],
+            surf->vertices[i][SR_Y],
+            surf->vertices[i][SR_Z]);
   }
 
   /* write all the faces */
   for(i = 0; i < surf->numFaces; i++) {
     fprintf(fp,"3 %d %d %d\n",
-	    surf->faces[i][0],
-	    surf->faces[i][1],
-	    surf->faces[i][2]);
+            surf->faces[i][0],
+            surf->faces[i][1],
+            surf->faces[i][2]);
   }
 
   fclose(fp);
@@ -208,7 +208,7 @@ surface *readOBJ(char* filename) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"reading obj file %s with %d vertices and %d faces...",
-	    filename,nv,nf);
+            filename,nv,nf);
   }
 
   /* reset the file pointer at the begining and read the verts and faces */
@@ -257,8 +257,8 @@ int writeOBJ(surface *surf, char *filename) {
 
   /* write the header */
   if(SR_VERBOSE) {
-    fprintf(stderr,"writing obj with %d vertices and %d faces\n", 
-	    surf->numVertices, surf->numFaces);
+    fprintf(stderr,"writing obj with %d vertices and %d faces\n",
+            surf->numVertices, surf->numFaces);
   }
 
   /* write the header */
@@ -267,17 +267,17 @@ int writeOBJ(surface *surf, char *filename) {
   /* write all the vertices */
   for(i = 0; i < surf->numVertices; i++) {
     fprintf(fp,"v %f %f %f\n",
-	    surf->vertices[i][SR_X],
-	    surf->vertices[i][SR_Y],
-	    surf->vertices[i][SR_Z]);
+            surf->vertices[i][SR_X],
+            surf->vertices[i][SR_Y],
+            surf->vertices[i][SR_Z]);
   }
 
   /* write all the faces */
   for(i = 0; i < surf->numFaces; i++) {
     fprintf(fp,"f %d %d %d\n",
-	    surf->faces[i][0]+1,
-	    surf->faces[i][1]+1,
-	    surf->faces[i][2]+1);
+            surf->faces[i][0]+1,
+            surf->faces[i][1]+1,
+            surf->faces[i][2]+1);
   }
 
   fclose(fp);
@@ -293,7 +293,7 @@ int writeOBJ(surface *surf, char *filename) {
  * reads a surface in a freesurfer triangle surface binary format
  * returns a surface structure or null if reading fails
  *
- * got file format from 
+ * got file format from
  * http://wideman-one.com/gw/brain/fs/surfacefileformats.htm
  *
  * used a couple tricks from mukund's readMGHsurf.m
@@ -320,8 +320,8 @@ surface *readMGHsurf(char* filename) {
   readBigEndianInt24(fp,1,&magicNum);
 
   /* test the magic number */
-  if(magicNum != TRIANGLE_FILE_MAGIC_NUMBER 
-     && magicNum != QUAD_FILE_MAGIC_NUMBER     
+  if(magicNum != TRIANGLE_FILE_MAGIC_NUMBER
+     && magicNum != QUAD_FILE_MAGIC_NUMBER
      && magicNum != NEW_QUAD_FILE_MAGIC_NUMBER
      ) {
     fprintf(stderr,"error: magic number (%u) doesn't match any MGH surface formats for %s.\n", magicNum, filename);
@@ -332,13 +332,13 @@ surface *readMGHsurf(char* filename) {
     /* two '\n's */
     readLine(fp,trash);
     readLine(fp,trash);
-  
+
     /* read the sizes */
     readBigEndianInt32(fp,1,&numVerts);
     readBigEndianInt32(fp,1,&numFaces);
 
     surf = createSurface(numVerts,numFaces);
-    
+
     /* read the vertices */
     for(i = 0; i < numVerts; i++) {
       readBigEndianFloat32(fp,3,v);
@@ -395,7 +395,7 @@ surface *readMGHsurf(char* filename) {
     // wont get here
     return NULL;
   }
-  
+
   fclose(fp);
 
   fprintf(stderr,"read MGH surf file with %d vertices.\n",numVerts);
@@ -423,8 +423,8 @@ int writeMGHsurf(surface *surf, char *filename) {
     return SR_FAILURE;
   }
 
-  fprintf(stderr,"writing freesurfer binary triangle surface with %d vertices and %d faces\n", 
-	  surf->numVertices, surf->numFaces);
+  fprintf(stderr,"writing freesurfer binary triangle surface with %d vertices and %d faces\n",
+          surf->numVertices, surf->numFaces);
 
   /* write the header */
   writeBigEndianInt24(fp,1,&magicNum);
@@ -483,7 +483,7 @@ int readLabelFile(surface *surf, char *filename) {
   }
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -513,7 +513,7 @@ int writeLabelFile(surface *surf, char *filename) {
   }
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -556,7 +556,7 @@ int readCurvatureFile(surface *surf, char *filename) {
   }
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -586,7 +586,7 @@ int writeCurvatureFile(surface *surf, char *filename) {
   }
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -633,12 +633,12 @@ int readMGHLabelFile(surface *surf, char *filename) {
     }
     else {
       fprintf(stderr,"vertex index %d out of bounds. num vertices is %d\n",
-	      v, surf->numVertices);	      
+              v, surf->numVertices);
     }
   }
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -707,7 +707,7 @@ int readMGHCurvatureFile(surface *surf, char *filename) {
   surf->curvatureMode = VERTEX_CURVATURE;
 
   fclose(fp);
-  
+
   return SR_SUCCESS;
 }
 
@@ -765,42 +765,42 @@ list *readSliceContours(char *filename) {
       /* read closure state */
       fscanf(fp, "%s", str);
       if(!strcmp(str,"closed")) {
-	cont->closed = CLOSED;
+        cont->closed = CLOSED;
       }
 
       /* read the first string on the next line, test for "adjacent" */
       fscanf(fp, "%s", str);
 
       while(strcmp(str,"adjacent")) {
-	/* create and read this vertex */
-	v = createVertex();
-	v->x = atof(str);
-	fscanf(fp, "%lf", &v->y);
-	v->z = sliceZ;
+        /* create and read this vertex */
+        v = createVertex();
+        v->x = atof(str);
+        fscanf(fp, "%lf", &v->y);
+        v->z = sliceZ;
 
-	enqueue(cont->vertices,v);
+        enqueue(cont->vertices,v);
 
-	fscanf(fp, "%s", str);
+        fscanf(fp, "%s", str);
       }
 
       /* read the adjacent contours as ints, convert to pointers later */
       fscanf(fp, "%d", &adjIndex);
       while(adjIndex != -1) {
-	/* add this index to the list */
-	in = (intNode*) malloc(sizeof(intNode));
-	in->val = adjIndex;
+        /* add this index to the list */
+        in = (intNode*) malloc(sizeof(intNode));
+        in->val = adjIndex;
 
-	enqueue(cont->adjacentContours,in);
+        enqueue(cont->adjacentContours,in);
 
-	fscanf(fp, "%d", &adjIndex);
+        fscanf(fp, "%d", &adjIndex);
       }
 
-      fscanf(fp, "%s ", str); 
+      fscanf(fp, "%s ", str);
     }
   }
 
   /* resolve the links from the ajacent contour indices */
-  for(sliceNode = getListNode(slices,0); 
+  for(sliceNode = getListNode(slices,0);
       listSize(slices) > 1 &&((listNode*)sliceNode)->next;
       sliceNode = (listNode*) sliceNode->next) {
 
@@ -810,24 +810,24 @@ list *readSliceContours(char *filename) {
 
     /* iterate over the contours in this slice */
     for(contNode = getListNode(slice,0); contNode;
-	contNode = (listNode*) contNode->next) {
+        contNode = (listNode*) contNode->next) {
       cont = (contour*) contNode->data;
 
       /* iterate over the adjacent contour indices */
       for(adjNode = getListNode(cont->adjacentContours,0); adjNode;
-	  adjNode = (listNode*) adjNode->next) {
+          adjNode = (listNode*) adjNode->next) {
 
-	/* get the index, replace it with a link, or NULL */
-	in = (intNode*) adjNode->data;
-	lnAdj = getListNode(nextSlice,in->val);
-	free(in);
+        /* get the index, replace it with a link, or NULL */
+        in = (intNode*) adjNode->data;
+        lnAdj = getListNode(nextSlice,in->val);
+        free(in);
 
-	if(lnAdj == NULL) {
-	  markForDeletion(adjNode);
-	}
-	else {
-	  setListNodeData(adjNode, (void*) lnAdj->data);
-	}
+        if(lnAdj == NULL) {
+          markForDeletion(adjNode);
+        }
+        else {
+          setListNodeData(adjNode, (void*) lnAdj->data);
+        }
       }
 
       deleteMarkedNodes(cont->adjacentContours);
@@ -866,44 +866,44 @@ int writeSliceContours(list *slices, char *filename) {
     if(sliceEmpty((list*) sliceNode->data)) continue;
 
     fprintf(fp,"slice %lf\n",
-	    ((vertex*) getListNode(((contour*)
-				    getListNode((list*) sliceNode->data,
-						0)->data)->vertices,
-				   0)->data)->z);
+            ((vertex*) getListNode(((contour*)
+                                    getListNode((list*) sliceNode->data,
+                                                0)->data)->vertices,
+                                   0)->data)->z);
 
     /* iterate over the contours in this slice */
     for(contNode = getListNode((list*) sliceNode->data,0); contNode;
-	contNode = (listNode*) contNode->next) {
+        contNode = (listNode*) contNode->next) {
       cont = (contour*) contNode->data;
 
       /* print the info for this contour */
       fprintf(fp, "contour ");
       switch(cont->closed) {
-      case OPEN:
-	fprintf(fp,"open");
-	break;
-      case CLOSED:
-	fprintf(fp,"closed");
-	break;
+        case OPEN:
+          fprintf(fp,"open");
+          break;
+        case CLOSED:
+          fprintf(fp,"closed");
+          break;
       }
       fprintf(fp,"\n");
 
       /* iterate over the vertices, writing each */
       for(vertNode = getListNode(cont->vertices,0); vertNode;
-	  vertNode = (listNode*) vertNode->next) {
-	v = (vertex*) vertNode->data;
+          vertNode = (listNode*) vertNode->next) {
+        v = (vertex*) vertNode->data;
 
-	fprintf(fp,"%lf %lf\n", v->x, v->y);
+        fprintf(fp,"%lf %lf\n", v->x, v->y);
       }
 
 
       fprintf(fp,"adjacent\n");
       /* iterate over the adjacent contours, writing the indices */
-      for(adjNode = getListNode(cont->adjacentContours,0); 
-	  i+1 < listSize(slices)&& adjNode;
-	  adjNode = (listNode*) adjNode->next) {
-	fprintf(fp, "%d ", findInListI((list*) getListNode(slices,i+1)->data,
-				      adjNode->data));
+      for(adjNode = getListNode(cont->adjacentContours,0);
+          i+1 < listSize(slices)&& adjNode;
+          adjNode = (listNode*) adjNode->next) {
+        fprintf(fp, "%d ", findInListI((list*) getListNode(slices,i+1)->data,
+                                       adjNode->data));
       }
       fprintf(fp,"-1\n");
 
@@ -940,15 +940,15 @@ int writeSliceContourLabels(list *slices, char *filename) {
       sliceNode = (listNode*) sliceNode->next, i++) {
     /* iterate over the contours in this slice */
     for(contNode = getListNode((list*) sliceNode->data,0); contNode;
-	contNode = (listNode*) contNode->next) {
+        contNode = (listNode*) contNode->next) {
       cont = (contour*) contNode->data;
 
       /* iterate over the vertices, writing each label */
       for(vertNode = getListNode(cont->vertices,0); vertNode;
-	  vertNode = (listNode*) vertNode->next) {
-	v = (vertex*) vertNode->data;
+          vertNode = (listNode*) vertNode->next) {
+        v = (vertex*) vertNode->data;
 
-	fprintf(fp,"%d\n", v->label);
+        fprintf(fp,"%d\n", v->label);
       }
     }
   }
@@ -983,15 +983,15 @@ int readSliceContourLabels(list *slices, char *filename) {
       sliceNode = (listNode*) sliceNode->next, i++) {
     /* iterate over the contours in this slice */
     for(contNode = getListNode((list*) sliceNode->data,0); !feof(fp) && contNode;
-	contNode = (listNode*) contNode->next) {
+        contNode = (listNode*) contNode->next) {
       cont = (contour*) contNode->data;
 
       /* iterate over the vertices, writing each label */
       for(vertNode = getListNode(cont->vertices,0); !feof(fp) && vertNode;
-	  vertNode = (listNode*) vertNode->next) {
-	v = (vertex*) vertNode->data;
+          vertNode = (listNode*) vertNode->next) {
+        v = (vertex*) vertNode->data;
 
-	fscanf(fp,"%d\n", &v->label);
+        fscanf(fp,"%d\n", &v->label);
       }
     }
   }
@@ -1010,7 +1010,7 @@ void deleteSliceContours(list *slices) {
   list *slice;
   contour *cont;
   for(i = getListNode(slices,0), k = 0; i; k++, i = (listNode*) i->next) {
-    slice = (list*) i->data; 
+    slice = (list*) i->data;
     for(j = getListNode(slice,0), l = 0; j; l++, j = (listNode*) j->next) {
       cont = (contour*) j->data;
       deleteContour(cont);
@@ -1045,7 +1045,7 @@ list *readNuagesSlices(char *filename) {
   cont->closed = CLOSED;
   enqueue(slice,cont);
   fscanf(fp, "S %d\nv %d z %lf\n{", &numSlices, &numVerts, &curZ);
-  
+
   // read all contours
   while(!feof(fp)) {
     fscanf(fp, "%s", str);
@@ -1054,9 +1054,9 @@ list *readNuagesSlices(char *filename) {
       if(feof(fp)) break; // if we read past the end
 
       if(!strcmp(str,"v")) { // new slice
-	fscanf(fp, "%d z %lf\n{",&numVerts,&curZ);
-	slice = newList(LIST);
-	enqueue(slices,slice);
+        fscanf(fp, "%d z %lf\n{",&numVerts,&curZ);
+        slice = newList(LIST);
+        enqueue(slices,slice);
       }
       cont = createContour();
       cont->closed = CLOSED;
@@ -1077,7 +1077,7 @@ list *readNuagesSlices(char *filename) {
 
 /**
  * looks for a valid surface format name in a string,
- * returns both the format 
+ * returns both the format
  */
 int getSurfFormatFromString(char *str, enum SURFACE_FORMAT *format) {
   /* validate */
@@ -1094,9 +1094,9 @@ int getSurfFormatFromString(char *str, enum SURFACE_FORMAT *format) {
     *format = OBJ;
   }
   else if(!strcmp(str,"mgh") || !strcmp(str,"MGH") ||
-	  !strcmp(str,"mghsurf") || !strcmp(str,"MGHsurf") ||
-	  !strcmp(str,"mghSurf") || !strcmp(str,"MGHSurf") ||
-	  !strcmp(str,"MGHSURF") || !strcmp(str,"fs") || !strcmp(str,"FS")) {
+          !strcmp(str,"mghsurf") || !strcmp(str,"MGHsurf") ||
+          !strcmp(str,"mghSurf") || !strcmp(str,"MGHSurf") ||
+          !strcmp(str,"MGHSURF") || !strcmp(str,"fs") || !strcmp(str,"FS")) {
     *format = MGHSURF;
   }
   else {

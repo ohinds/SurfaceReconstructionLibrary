@@ -1,6 +1,6 @@
 /*****************************************************************************
  * tile.h is the header file with functions to tile a surface between two
- * slices/contours for libsr 
+ * slices/contours for libsr
  * Oliver Hinds <oph@bu.edu> 2005-06-22
  *
  *
@@ -103,19 +103,19 @@ path **twoPathsNoclosure(graph *G);
 /**
  * find the paths between two bounding paths
  */
-void pathsBetween(graph *G, path **paths, int botPath, 
-		  int topPath, int length, int close);
+void pathsBetween(graph *G, path **paths, int botPath,
+                  int topPath, int length, int close);
 
 /**
- * run dijstra's single source shortest path algorithm 
+ * run dijstra's single source shortest path algorithm
  */
 path *singlePath(graph *G, int source, int length, int close);
 
 /**
- * relax function 
+ * relax function
  */
 double relax(graph *G, edge *u, double wu, edge *v, double wv, int dir);
-  //listNode *relax(graph *G, listNode* u, listNode *v, int dir);
+//listNode *relax(graph *G, listNode* u, listNode *v, int dir);
 
 /**
  * build an actual edge list from a path in the planar graph
@@ -143,7 +143,7 @@ void freePath(path *p);
  */
 int findAdj(graph *G, list *vertexHeap, edge *u, int dir);
 
-/** 
+/**
  * tests that a contour is not refered to in the contour adjacency
  * list of any of a list of contours
  */

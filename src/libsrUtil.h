@@ -2,7 +2,7 @@
  * libsrUtil.h is the header file for utility functions for libsr
  * Oliver Hinds <oph@bu.edu> 2005-06-22
  *
- * 
+ *
  *
  *****************************************************************************/
 
@@ -35,13 +35,13 @@ contour *createContour();
 
 /**
  * clone a contour
- * returns a pointer to a new contour copied from the one passed, 
+ * returns a pointer to a new contour copied from the one passed,
  * or null, if flibvpure
  */
 contour *cloneContour(contour *cont);
 
 /**
- * deletes a contour 
+ * deletes a contour
  */
 void deleteContour(contour *cont);
 
@@ -56,10 +56,10 @@ double contourArea(contour* cont);
 void deleteEmptySlices(list *slices);
 
 /**
- * clones a pair of slices, maintaining adjacency 
+ * clones a pair of slices, maintaining adjacency
  */
-void cloneSlices(list *slice1, list *slice2, 
-		 list **newSlice1, list **newSlice2);
+void cloneSlices(list *slice1, list *slice2,
+                 list **newSlice1, list **newSlice2);
 
 /**
  * gets the average interslice distance
@@ -115,18 +115,18 @@ int selectVerticesBetween(list *vertices);
  */
 vertex *createVertex();
 
-/** 
+/**
  * copies a vertex
  * returns a copy of the passed vertex, or null, if cant allocate
  */
 vertex *copyVertex(vertex *v);
 
-/** 
+/**
  * gets a new vertex that is the midpoint between two vertices
  */
 vertex *getMidpoint(vertex *v1, vertex *v2);
 
-/** 
+/**
  * test for intersection of a contour and an edge
  */
 int edgeContourIntersect(edge *e, contour *c);
@@ -186,7 +186,7 @@ double angleBetweenSegments(vertex *a, vertex *b, vertex *c);
 int inContourSkelVert(contour *c, vertex *v);
 
 /**
- * get the skeleton of a closed contour 
+ * get the skeleton of a closed contour
  * input is a closed contour
  * output is a list of vertices on the skeleton and a list of edges
  * connecting the vertices, both are null if skeleton cannot be found
@@ -220,7 +220,7 @@ list *readTriangleEdgeFile(char *filename);
 int readTriangleNodeAndEdgeFile(char *filebase, list **vertices, list **edges);
 
 /**
- * runs Triangle on an existing .poly file, producing an off file 
+ * runs Triangle on an existing .poly file, producing an off file
  * NOTE: uses the -qBPNEg flags when running Triangle
  */
 int executeTriangle(char *polyInputFilename);

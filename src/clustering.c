@@ -13,7 +13,7 @@
  * perform a k means cluster analysis
  */
 int kmeans(double **data, int numDatapoints, int dataDimensions, int numMeans,
-	   int **clusters, double ***means) {
+           int **clusters, double ***means) {
   int i;
   int numFlips = 1;
 
@@ -41,9 +41,9 @@ int kmeans(double **data, int numDatapoints, int dataDimensions, int numMeans,
   i = 0;
   while(numFlips > 0) {
     updateMeans(data,numDatapoints,dataDimensions,
-		(*clusters),numMeans,(*means));
+                (*clusters),numMeans,(*means));
     assignClustersByClosestMean(data,numDatapoints,dataDimensions,numMeans,
-				(*means),(*clusters),&numFlips);
+                                (*means),(*clusters),&numFlips);
 
   }
 
@@ -54,8 +54,8 @@ int kmeans(double **data, int numDatapoints, int dataDimensions, int numMeans,
  * assign cluster numbers to data points via closest mean calculation
  */
 int assignClustersByClosestMean(double **data, int numDatapoints,
-				int dataDimensions, int numMeans,
-				double **means, int *clusters, int *flips) {
+                                int dataDimensions, int numMeans,
+                                double **means, int *clusters, int *flips) {
   int i,el;
 
   *flips = 0;
@@ -84,13 +84,13 @@ int assignClustersByClosestMean(double **data, int numDatapoints,
  * update the locations of n mean clusters
  */
 int updateMeans(double **data, int numDatapoints, int dataDimensions,
-		int *clusters, int numMeans, double **means) {
+                int *clusters, int numMeans, double **means) {
   int i,j;
   double **sums;
   int *counts;
 
   /* validate */
-  if(data == NULL || numDatapoints < 1 || dataDimensions < 1 
+  if(data == NULL || numDatapoints < 1 || dataDimensions < 1
      || clusters == NULL || numMeans < 1 || means == NULL) {
     return SR_FAILURE;
   }
@@ -207,9 +207,9 @@ int vectorSum(double *a, double *b, int n, double *c) {
 //}
 
 /************************************************************************
-*** $Source: /home/cvs/PROJECTS/SurfaceReconstructionLibrary/src/clustering.c,v $
-*** Local Variables:
-*** mode: c
-*** fill-column: 76
-*** End:
-************************************************************************/
+ *** $Source: /home/cvs/PROJECTS/SurfaceReconstructionLibrary/src/clustering.c,v $
+ *** Local Variables:
+ *** mode: c
+ *** fill-column: 76
+ *** End:
+ ************************************************************************/

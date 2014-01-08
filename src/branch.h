@@ -3,7 +3,7 @@
  * branching problem for libsr
  * Oliver Hinds <oph@bu.edu> 2005-06-22
  *
- * 
+ *
  *
  *****************************************************************************/
 
@@ -21,12 +21,12 @@
 /**
  * take two sets of contours for adjacent slices that already have
  * correspondences identified. For each contour one slice one that is
- * connected to multiple contours on slice two, break it up. 
+ * connected to multiple contours on slice two, break it up.
  *
  * 1) identify possible branch locations by finding ends of contours that
- * aren't aligned with ends of corresponding contours.  
- * 
- * 2) create a new contour pair from those contours. 
+ * aren't aligned with ends of corresponding contours.
+ *
+ * 2) create a new contour pair from those contours.
  * 3) repeat until all correspodences are one-to-one
  */
 list *branchSlices(list *slice1, list *slice2);
@@ -34,14 +34,14 @@ list *branchSlices(list *slice1, list *slice2);
 /**
  * split contours via maximum likelihood estimation of boundaries
  */
-void splitContoursMLE(contour *cont, list *adjacent, 
-		      contour ***closestContours);
+void splitContoursMLE(contour *cont, list *adjacent,
+                      contour ***closestContours);
 
 /**
  * create contour pairs and add them to a list from a set of closest contours
  */
 void addContourPairsFromClosest(contour *curCont, contour **closestContours,
-				list *contourPairs);
+                                list *contourPairs);
 
 /**
  * take in a list of contour pairs that are connected to the split
@@ -61,8 +61,8 @@ void addContourPairsFromClosest(contour *curCont, contour **closestContours,
  * 4) choose the configuration of transitions and closest contour assignments
  *    with the fewest misclassified vertices
  */
-void splitContoursTransitions(contour *splitContour, list *contours, 
-			      int *contourAssignments);
+void splitContoursTransitions(contour *splitContour, list *contours,
+                              int *contourAssignments);
 
 /**
  * take in a list of contour pairs that all have the same c2Origin and
@@ -105,7 +105,7 @@ vertex *getClosestVertexInContour(contour *cont, vertex *v);
 int getClosestVertexInContourInd(contour *cont, vertex *v);
 
 /**
- * get the closest contour to a vertex 
+ * get the closest contour to a vertex
  */
 contour *getClosestContour(vertex *v, list *contours);
 
@@ -118,18 +118,18 @@ float getMinDistance(vertex *v, list *vertices);
  * evaluate a particular order and location of constant conoutr assignment
  */
 int getNumMisclassifiedVertices(list *contours,
-				int numVertices,
-				contour **closestContours, 
-				gsl_permutation *order,
-				list *possibleTransitions,
-				gsl_combination *transitions);
+                                int numVertices,
+                                contour **closestContours,
+                                gsl_permutation *order,
+                                list *possibleTransitions,
+                                gsl_combination *transitions);
 
 /**
  * searches two branched contours forvertices that were adjacent on the
  * original contour
  */
-int matchBranchedContours(contour *c1, contour *c2, 
-			  int *c10, int *c11, int *c20, int *c21);
+int matchBranchedContours(contour *c1, contour *c2,
+                          int *c10, int *c11, int *c20, int *c21);
 
 #endif
 

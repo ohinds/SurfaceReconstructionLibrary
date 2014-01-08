@@ -139,7 +139,7 @@ void unprepareSurf(surface *surf) {
   if(surf->LTaV != NULL) {
     for(i = 0; i < V; i++) {
       if(surf->LTaV[i] != NULL) {
-	free(surf->LTaV[i]);
+        free(surf->LTaV[i]);
       }
     }
     free(surf->LTaV);
@@ -150,7 +150,7 @@ void unprepareSurf(surface *surf) {
   if(surf->v1TaV != NULL) {
     for(i = 0; i < V; i++) {
       if(surf->v1TaV[i] != NULL) {
-	free(surf->v1TaV[i]);
+        free(surf->v1TaV[i]);
       }
     }
     free(surf->v1TaV);
@@ -161,7 +161,7 @@ void unprepareSurf(surface *surf) {
   if(surf->v2TaV != NULL) {
     for(i = 0; i < V; i++) {
       if(surf->v2TaV[i] != NULL) {
-	free(surf->v2TaV[i]);
+        free(surf->v2TaV[i]);
       }
     }
     free(surf->v2TaV);
@@ -176,46 +176,46 @@ void unprepareSurf(surface *surf) {
 
   // Neighbors
   if(surf->Neighbors != NULL) {
-   for(i = 0; i < V; i++) {
+    for(i = 0; i < V; i++) {
       if(surf->Neighbors[i] != NULL) {
-	free(surf->Neighbors[i]);
+        free(surf->Neighbors[i]);
       }
     }
-   free(surf->Neighbors);
-   surf->Neighbors = NULL;
+    free(surf->Neighbors);
+    surf->Neighbors = NULL;
   }
 
   // NTaE
   if(surf->NTaE != NULL) {
-   for(i = 0; i < V; i++) {
+    for(i = 0; i < V; i++) {
       if(surf->NTaE[i] != NULL) {
-	free(surf->NTaE[i]);
+        free(surf->NTaE[i]);
       }
     }
-   free(surf->NTaE);
-   surf->NTaE = NULL;
+    free(surf->NTaE);
+    surf->NTaE = NULL;
   }
 
   // LT1aNE
   if(surf->LT1aNE != NULL) {
-   for(i = 0; i < V; i++) {
+    for(i = 0; i < V; i++) {
       if(surf->LT1aNE[i] != NULL) {
-	free(surf->LT1aNE[i]);
+        free(surf->LT1aNE[i]);
       }
     }
-   free(surf->LT1aNE);
-   surf->LT1aNE = NULL;
+    free(surf->LT1aNE);
+    surf->LT1aNE = NULL;
   }
 
   // LT2aNE
   if(surf->LT2aNE != NULL) {
-   for(i = 0; i < V; i++) {
+    for(i = 0; i < V; i++) {
       if(surf->LT2aNE[i] != NULL) {
-	free(surf->LT2aNE[i]);
+        free(surf->LT2aNE[i]);
       }
     }
-   free(surf->LT2aNE);
-   surf->LT2aNE = NULL;
+    free(surf->LT2aNE);
+    surf->LT2aNE = NULL;
   }
 
   // vertex manifoldness
@@ -229,20 +229,20 @@ void unprepareSurf(surface *surf) {
 
   // opposite triangles
   if(surf->OT != NULL) {
-   for(i = 0; i < V; i++) {
+    for(i = 0; i < V; i++) {
       if(surf->OT[i] != NULL) {
-	free(surf->OT[i]);
+        free(surf->OT[i]);
       }
     }
-   free(surf->OT);
-   surf->OT = NULL;
+    free(surf->OT);
+    surf->OT = NULL;
   }
 
   // opposite vertices
   if(surf->OV != NULL) {
     for(i = 0; i < V; i++) {
       if(surf->OV[i] != NULL) {
-	free(surf->OV[i]);
+        free(surf->OV[i]);
       }
     }
     free(surf->OV);
@@ -287,22 +287,22 @@ void topoFixer(surface *surf) {
 
   int i, V = surf->numVertices;
 
-//  // find and fix two hole errors by duplicating a vertex
-//  for(i = 0; i < V; i++) {
-//    if(surf->vertexManifoldness[i] == VERT_TWO_HOLE_ERROR) {
-//      fixTwoHoleError(surf,i);
-//    }
-//  }
-//
-//  preprocessSurf(surf);
-//  V = surf->numVertices;
-//
-//  // find and fix cone errors by duplicating a vertex
-//  for(i = 0; i < V; i++) {
-//    if(surf->vertexManifoldness[i] == VERT_CONE_ERROR) {
-//      fixConeError(surf,i);
-//    }
-//  }
+  //  // find and fix two hole errors by duplicating a vertex
+  //  for(i = 0; i < V; i++) {
+  //    if(surf->vertexManifoldness[i] == VERT_TWO_HOLE_ERROR) {
+  //      fixTwoHoleError(surf,i);
+  //    }
+  //  }
+  //
+  //  preprocessSurf(surf);
+  //  V = surf->numVertices;
+  //
+  //  // find and fix cone errors by duplicating a vertex
+  //  for(i = 0; i < V; i++) {
+  //    if(surf->vertexManifoldness[i] == VERT_CONE_ERROR) {
+  //      fixConeError(surf,i);
+  //    }
+  //  }
 
 
   // find errors and fix by duplicating a vertex
@@ -325,37 +325,37 @@ list *getBoundaries(surface *s) {
     return NULL;
   }
 
-// NOTES on algorithm:
-//
-// 1) we assume that every vertex is either interior w/
-// NNoV - NTaV = 0, or a boundary vertex with NNoV - NTaV = 1.
-//
-// 2) consistentOrientation means Neighbors is such that a vertex is
-// circumnavigated by its neighbors in a consistent way (consistent
-// across vertices).
-//
-// For a boundary vertex n1, let the first item in its Neighbor-list be
-// n2. Then for n2, n1 must be the LAST item in n2's Neighbor-list for
-// the orientation to be consistent.
-//
-// 3) consistentFaces makes each triangle [n0 n1 n2], [n0 n2 n3],
-// etc. where n0 is the source, n1-n3 are its ordered neighbors.
-//
-// So if, in a flattening, each triangle is ordered in an
-// anti-clockwise manner, then the ordered boundary vertices will go
-// around in an anti-clockwise manner.
+  // NOTES on algorithm:
+  //
+  // 1) we assume that every vertex is either interior w/
+  // NNoV - NTaV = 0, or a boundary vertex with NNoV - NTaV = 1.
+  //
+  // 2) consistentOrientation means Neighbors is such that a vertex is
+  // circumnavigated by its neighbors in a consistent way (consistent
+  // across vertices).
+  //
+  // For a boundary vertex n1, let the first item in its Neighbor-list be
+  // n2. Then for n2, n1 must be the LAST item in n2's Neighbor-list for
+  // the orientation to be consistent.
+  //
+  // 3) consistentFaces makes each triangle [n0 n1 n2], [n0 n2 n3],
+  // etc. where n0 is the source, n1-n3 are its ordered neighbors.
+  //
+  // So if, in a flattening, each triangle is ordered in an
+  // anti-clockwise manner, then the ordered boundary vertices will go
+  // around in an anti-clockwise manner.
 
 
 
-// PREPROCESSING NOTE: surfStruct must be a MANIFOLD. If the boundary
-// vertices are non-manifold, it is not possible to traverse them in
-// order (robustly). This function therefore assumes a single component
-// manifold, and uses the fact that the triangulation is oriented
-// consistently. However, it could be generalized to work on
-// non-manifold meshes for which the non-manifoldness occurs away from
-// the boundary.
-//
-//checkSurface(surfStruct, mfilename, inputname(1), 'ccE', 'manifE');
+  // PREPROCESSING NOTE: surfStruct must be a MANIFOLD. If the boundary
+  // vertices are non-manifold, it is not possible to traverse them in
+  // order (robustly). This function therefore assumes a single component
+  // manifold, and uses the fact that the triangulation is oriented
+  // consistently. However, it could be generalized to work on
+  // non-manifold meshes for which the non-manifoldness occurs away from
+  // the boundary.
+  //
+  //checkSurface(surfStruct, mfilename, inputname(1), 'ccE', 'manifE');
 
   listNode *ln;
   list *boundaries = newList(LIST);
@@ -373,7 +373,7 @@ list *getBoundaries(surface *s) {
     indivMap = neighborhood(s,(long)comp->data);
     for(i = 0; i < s->numVertices; i++) {
       if(indivMap[i] != -1 && s->NNoV[i] - s->NTaV[i] == 1) {
-	enqueue(bN,(void*)i);
+        enqueue(bN,(void*)i);
       }
     }
     free(indivMap);
@@ -396,46 +396,46 @@ list *getBoundaries(surface *s) {
       // traverse the boundary of the surface
       n1 = n0;
       while(listSize(bN) > 0) {
-	found = 0;
-	for(i = 0; i < s->NNoV[n1]; i++) {
-	  tmp = s->Neighbors[n1][i];
-	  ni = findInListI(bN,(void*) tmp);
+        found = 0;
+        for(i = 0; i < s->NNoV[n1]; i++) {
+          tmp = s->Neighbors[n1][i];
+          ni = findInListI(bN,(void*) tmp);
 
-	  if(ni > -1 && (s->LT1aNE[n1][i] == -1 || s->LT2aNE[n1][i] == -1)) {
-	    ln = removeListNode(bN,ni);
-	    n2 = (long) ln->data;
-	    // add n2 to the ordered list
-	    enqueue(curBoundary,(void*)n2);
-	    free(ln);
-	    n1 = n2;
-	    found = 1;
-	    break;
-	  }
-	}
+          if(ni > -1 && (s->LT1aNE[n1][i] == -1 || s->LT2aNE[n1][i] == -1)) {
+            ln = removeListNode(bN,ni);
+            n2 = (long) ln->data;
+            // add n2 to the ordered list
+            enqueue(curBoundary,(void*)n2);
+            free(ln);
+            n1 = n2;
+            found = 1;
+            break;
+          }
+        }
 
-	if(!found) {
-	  break;
-	}
+        if(!found) {
+          break;
+        }
 
-	//n2 = s->Neighbors[n1][0];
-	// Above, we assume a consistently oriented triangulation.
-	// Otherwise, then we would have to search through the neighbors of
-	// n_1 for another vertex on the boundary (but other than the one
-	// prior to n_1)
+        //n2 = s->Neighbors[n1][0];
+        // Above, we assume a consistently oriented triangulation.
+        // Otherwise, then we would have to search through the neighbors of
+        // n_1 for another vertex on the boundary (but other than the one
+        // prior to n_1)
 
-	//printf("n0=%d n1=%d n2=%d\n",n0,n1,n2);
+        //printf("n0=%d n1=%d n2=%d\n",n0,n1,n2);
 
-//	if(n2 == n0) {
-//
-//	  break;
-//	}
-//	else {
-//	  // add n2 to the ordered list
-//	  enqueue(curBoundary,(void*)n2);
-//	  // eliminate n2 from the original unordered list
-//	  free(removeListNode(bN, findInListI(bN,(void*)n2)));
-//	  n1 = n2;
-//	}
+        //	if(n2 == n0) {
+        //
+        //	  break;
+        //	}
+        //	else {
+        //	  // add n2 to the ordered list
+        //	  enqueue(curBoundary,(void*)n2);
+        //	  // eliminate n2 from the original unordered list
+        //	  free(removeListNode(bN, findInListI(bN,(void*)n2)));
+        //	  n1 = n2;
+        //	}
       }
     }
 
@@ -464,16 +464,16 @@ void trianglesAtVertex(surface *surf) {
   /* First Pass through f: calc #triangles at each vertex */
   surf->maxNTaV = 0;
   for(i = 0; i < F; i++)
+  {
+    for(j = 0; j < 3; j++)
     {
-      for(j = 0; j < 3; j++)
-	{
-	  vert = f[i][j]; /* next vertex from adjacency list f */
-	  NTaV[vert]++; /* increment NTaV[vert] */
+      vert = f[i][j]; /* next vertex from adjacency list f */
+      NTaV[vert]++; /* increment NTaV[vert] */
 
-	  if( NTaV[vert] > surf->maxNTaV ) /* keep track of max NTaV[vertex] */
-	    surf->maxNTaV = NTaV[vert];    /* in maxNTaV */
-	}
+      if( NTaV[vert] > surf->maxNTaV ) /* keep track of max NTaV[vertex] */
+        surf->maxNTaV = NTaV[vert];    /* in maxNTaV */
     }
+  }
 
   // allocate room for each triangle label list and v1 and v2 list
   counter = (int*) malloc(V*sizeof(int));
@@ -493,35 +493,35 @@ void trianglesAtVertex(surface *surf) {
 
 
   for(i = 0; i < F; i++)
-    {
-      /* get vertices from adjacency list, f, */
-      /* 3 at a time, i.e. a triangle at a time */
-      vert1 = f[i][0]; /* vert1 = f[3*i]; */
-      vert2 = f[i][1]; /* vert2 = f[3*i + 1]; */
-      vert3 = f[i][2]; /* vert3 = f[3*i + 2]; */
+  {
+    /* get vertices from adjacency list, f, */
+    /* 3 at a time, i.e. a triangle at a time */
+    vert1 = f[i][0]; /* vert1 = f[3*i]; */
+    vert2 = f[i][1]; /* vert2 = f[3*i + 1]; */
+    vert3 = f[i][2]; /* vert3 = f[3*i + 2]; */
 
-      /* Put triangle in LTaV, at the appropriate location  */
-      /* given by Index[vert]. Put other 2 vertices in the */
-      /* corresponding locations in v1TaV and v2TaV */
-      /*                 vertex 1                            */
-      LTaV [vert1][counter[vert1]] = i; /* i = triangle label */
-      v1TaV[vert1][counter[vert1]] = vert2;
-      v2TaV[vert1][counter[vert1]] = vert3;
-      /*                 vertex 2                            */
-      LTaV [vert2][counter[vert2]] = i; /* i = triangle label */
-      v1TaV[vert2][counter[vert2]] = vert1;
-      v2TaV[vert2][counter[vert2]] = vert3;
-      /*                 vertex 3                            */
-      LTaV [vert3][counter[vert3]] = i; /* i = triangle label */
-      v1TaV[vert3][counter[vert3]] = vert1;
-      v2TaV[vert3][counter[vert3]] = vert2;
+    /* Put triangle in LTaV, at the appropriate location  */
+    /* given by Index[vert]. Put other 2 vertices in the */
+    /* corresponding locations in v1TaV and v2TaV */
+    /*                 vertex 1                            */
+    LTaV [vert1][counter[vert1]] = i; /* i = triangle label */
+    v1TaV[vert1][counter[vert1]] = vert2;
+    v2TaV[vert1][counter[vert1]] = vert3;
+    /*                 vertex 2                            */
+    LTaV [vert2][counter[vert2]] = i; /* i = triangle label */
+    v1TaV[vert2][counter[vert2]] = vert1;
+    v2TaV[vert2][counter[vert2]] = vert3;
+    /*                 vertex 3                            */
+    LTaV [vert3][counter[vert3]] = i; /* i = triangle label */
+    v1TaV[vert3][counter[vert3]] = vert1;
+    v2TaV[vert3][counter[vert3]] = vert2;
 
-      /* Increment index to "point" to the next open slot in LTaV */
-      /* for each vertex */
-      counter[vert1]++;
-      counter[vert2]++;
-      counter[vert3]++;
-    }
+    /* Increment index to "point" to the next open slot in LTaV */
+    /* for each vertex */
+    counter[vert1]++;
+    counter[vert2]++;
+    counter[vert3]++;
+  }
 
   free(counter);
 
@@ -541,13 +541,13 @@ void trianglesAtVertex(surface *surf) {
  *              the edge (LT2aNE[] = -1 on a boundary/hole edge)
  */
 void edgeProcess(surface *surf) {
-//		 /* Inputs */
-//		 /* Outputs */
-//		 int *NNoV, int *E,
-//		 int **Neighbors, int **LT1aNE, int **LT2aNE,
-//		 int *NON_MANIFOLD,
-//		 int *vertexManifoldness)
-//{
+  //		 /* Inputs */
+  //		 /* Outputs */
+  //		 int *NNoV, int *E,
+  //		 int **Neighbors, int **LT1aNE, int **LT2aNE,
+  //		 int *NON_MANIFOLD,
+  //		 int *vertexManifoldness)
+  //{
 
   int i, j;
   unsigned int V = surf->numVertices;
@@ -568,283 +568,283 @@ void edgeProcess(surface *surf) {
 
   surf->E = 0;
 
-//  int *NNoV = surf->NNoV;
-//  int **Neighbors = surf->Neighbors;
-//  int **LT1aNE = surf->LT1aNE;
-//  int **LT2aNE = surf->LT2aNE;
-//
-//  int *vertexManifoldness = surf->vertexManifoldness;
+  //  int *NNoV = surf->NNoV;
+  //  int **Neighbors = surf->Neighbors;
+  //  int **LT1aNE = surf->LT1aNE;
+  //  int **LT2aNE = surf->LT2aNE;
+  //
+  //  int *vertexManifoldness = surf->vertexManifoldness;
   surf->manifoldness = SURF_MANIFOLD;
 
   /* Loop: fill up Neighbors[], LT1aNE[] and LT2aNE[], and in */
   /* the process, calc E, NNoV[] and Index2[] */
   for(i = 0; i < V; i++)
+  {
+
+    surf->NNoV[i] = 0;
+    counter = 0;
+    NON_MANIFOLD_VERTEX = 0;
+    surf->vertexManifoldness[i] = VERT_MANIFOLD;
+
+    /* ------------------------------------------------------ */
+    /* Fill up vertexList & triangList w/ NTaV[i] pairs */
+    /* (i.e. 2 times the number of triangles at vertex i). */
+    /* For vertexList, each pair is label of the 2 vertices */
+    /* other than i (from v1TaV and v2TaV), and for triangList, */
+    /* the pair is simply the triangle label twice (from LTaV) */
+    for(j = 0; j < NTaV[i]; j++)
     {
+      vertexList[counter] = v1TaV[i][j];
+      triangList[counter] = LTaV[i][j];
+      counter++;
 
-      surf->NNoV[i] = 0;
-      counter = 0;
-      NON_MANIFOLD_VERTEX = 0;
-      surf->vertexManifoldness[i] = VERT_MANIFOLD;
+      vertexList[counter] = v2TaV[i][j];
+      triangList[counter] =  LTaV[i][j];
+      counter++;
+    }
+    /* e.g. vertexList = E B  A E  B G */
+    /*      triangList = 3 3  1 1  2 2 */
+    /* Done filling up vertexList and triangList */
 
-      /* ------------------------------------------------------ */
-      /* Fill up vertexList & triangList w/ NTaV[i] pairs */
-      /* (i.e. 2 times the number of triangles at vertex i). */
-      /* For vertexList, each pair is label of the 2 vertices */
-      /* other than i (from v1TaV and v2TaV), and for triangList, */
-      /* the pair is simply the triangle label twice (from LTaV) */
-      for(j = 0; j < NTaV[i]; j++)
-	{
-	  vertexList[counter] = v1TaV[i][j];
-	  triangList[counter] = LTaV[i][j];
-	  counter++;
+    /* (HOMEWORK POINT 1) */
 
-	  vertexList[counter] = v2TaV[i][j];
-	  triangList[counter] =  LTaV[i][j];
-	  counter++;
-	}
-      /* e.g. vertexList = E B  A E  B G */
-      /*      triangList = 3 3  1 1  2 2 */
-      /* Done filling up vertexList and triangList */
+    /* ------------------------------------------------------ */
+    /* vertexList will contain 2 vertex labels for any edge */
+    /* that is a part of 2 triangles. Next, search for the */
+    /* repeat of a given vertex label, and delete this repeat */
+    /* from vertexList, after storing the label of the triangle */
+    /* the repeated vertex was a part of. */
 
-      /* (HOMEWORK POINT 1) */
+    /* This is done as follows: take the first vertex label in */
+    /* vertexList as the "key". Search vertexList "items" until */
+    /* either 1) "item" is found that matches "key" or 2) the end */
+    /* of the list is encountered. */
 
-      /* ------------------------------------------------------ */
-      /* vertexList will contain 2 vertex labels for any edge */
-      /* that is a part of 2 triangles. Next, search for the */
-      /* repeat of a given vertex label, and delete this repeat */
-      /* from vertexList, after storing the label of the triangle */
-      /* the repeated vertex was a part of. */
+    /* If 1), then copy the triangle label at "item" (i.e. the */
+    /* triangle label of the repeated vertex label) into */
+    /* secondTriList[key]. Then delete "item", by copying */
+    /* vertexList[endOfList] and triangList[endOfList] into */
+    /* vertexList[item] and triangList[item] respectively, and */
+    /* then decrementing endOfList */
 
-      /* This is done as follows: take the first vertex label in */
-      /* vertexList as the "key". Search vertexList "items" until */
-      /* either 1) "item" is found that matches "key" or 2) the end */
-      /* of the list is encountered. */
+    /* If 2), then put a -1 in secondTriList[key], indicating */
+    /* that no second triangle was found for the vertex whose */
+    /* label is in vertexList[key] */
 
-      /* If 1), then copy the triangle label at "item" (i.e. the */
-      /* triangle label of the repeated vertex label) into */
-      /* secondTriList[key]. Then delete "item", by copying */
-      /* vertexList[endOfList] and triangList[endOfList] into */
-      /* vertexList[item] and triangList[item] respectively, and */
-      /* then decrementing endOfList */
+    endOfList = 2*NTaV[i] - 1;
 
-      /* If 2), then put a -1 in secondTriList[key], indicating */
-      /* that no second triangle was found for the vertex whose */
-      /* label is in vertexList[key] */
+    for(j = 0; j <= endOfList ; j++)
+      secondTriList[j] = -1;
 
-      endOfList = 2*NTaV[i] - 1;
+    /* soloIndex will store the index of a vertex with no repeats,
+       or stay equal to zero if all vertices have repeats */
+    soloIndex = 0;
 
-      for(j = 0; j <= endOfList ; j++)
-	secondTriList[j] = -1;
-
-      /* soloIndex will store the index of a vertex with no repeats,
-         or stay equal to zero if all vertices have repeats */
-      soloIndex = 0;
-
-      key = 0; /* endOfList = 2*NTaV[i] - 1; */
-      while(key < endOfList) /* W1 */
-	{
-	  item = key + 1;
-	  FOUND = 0;
-	  while(item <= endOfList) /* W2 */
+    key = 0; /* endOfList = 2*NTaV[i] - 1; */
+    while(key < endOfList) /* W1 */
+    {
+      item = key + 1;
+      FOUND = 0;
+      while(item <= endOfList) /* W2 */
 	    {
 
 	      if(vertexList[item] == vertexList[key])
-		{
-		  /* Copy the last item on the list to "item", the
-		     current position, and decrement "endOfList",
-		     the list length */
-		  secondTriList[key] = triangList[item];
-		  triangList[item] = triangList[endOfList];
-		  vertexList[item] = vertexList[endOfList];
-		  endOfList--;
+        {
+          /* Copy the last item on the list to "item", the
+             current position, and decrement "endOfList",
+             the list length */
+          secondTriList[key] = triangList[item];
+          triangList[item] = triangList[endOfList];
+          vertexList[item] = vertexList[endOfList];
+          endOfList--;
 
-		  /* Because "item" now contains a new item (which
-		     used to be at the end of the list), we
-		     shouldn't increment "item" if we want to see
-		     this item. So we decrement "item" here, as it
-		     will be incremented later */
-		  item--;
+          /* Because "item" now contains a new item (which
+             used to be at the end of the list), we
+             shouldn't increment "item" if we want to see
+             this item. So we decrement "item" here, as it
+             will be incremented later */
+          item--;
 
-		  if(FOUND == 0)
-		    { /* This is the first time item matches key */
-		      FOUND = 1;
-		    }
-		  else
-		    { /* This means the vertex in vertexList[key] has
-			 occurred 3 or more times in the list:
-			 i.e.  this edge is in 3 or more triangles
-			 i.e.  this is a non-manifold edge */
+          if(FOUND == 0)
+          { /* This is the first time item matches key */
+            FOUND = 1;
+          }
+          else
+          { /* This means the vertex in vertexList[key] has
+               occurred 3 or more times in the list:
+               i.e.  this edge is in 3 or more triangles
+               i.e.  this is a non-manifold edge */
 
-		      NON_MANIFOLD_VERTEX = 1;
-		      surf->vertexManifoldness[i] = VERT_MORE_THAN_TWO_TRIS_AT_EDGE_ERROR;
-		      surf->manifoldness = SURF_NON_MANIFOLD;
+            NON_MANIFOLD_VERTEX = 1;
+            surf->vertexManifoldness[i] = VERT_MORE_THAN_TWO_TRIS_AT_EDGE_ERROR;
+            surf->manifoldness = SURF_NON_MANIFOLD;
 
-		    }
+          }
 
-		}
+        }
 
 	      item++;
 
 	    }/* return to W2 */
 
-	  if(FOUND == 0)
-	    soloIndex = key;
+      if(FOUND == 0)
+        soloIndex = key;
 
-	  key++;
+      key++;
 
-	}/* return to W1 */
+    }/* return to W1 */
 
-      /* For the example above, we'll have: (unless NON_MANIFOLD_VERTEX = 1)*/
-      /* e.g. vertexList = E  B  A  G   \                  */
-      /*      triangList = 3  3  1  2    > endOfList = 3   */
-      /*   secondTriList = 1  2 -1 -1   /                  */
-      /*                    */
-      /* Done removing repeats from vertexList and corresponding */
-      /* triangList entries, and filling up secondTriList */
+    /* For the example above, we'll have: (unless NON_MANIFOLD_VERTEX = 1)*/
+    /* e.g. vertexList = E  B  A  G   \                  */
+    /*      triangList = 3  3  1  2    > endOfList = 3   */
+    /*   secondTriList = 1  2 -1 -1   /                  */
+    /*                    */
+    /* Done removing repeats from vertexList and corresponding */
+    /* triangList entries, and filling up secondTriList */
 
-      /* (HOMEWORK POINT 2) */
+    /* (HOMEWORK POINT 2) */
 
-      if(NON_MANIFOLD_VERTEX == 0)
-	{
-	  /* --------------------------------------------------------- */
-	  /* Sort vertexList, triangList and secondTriList, so that */
-	  /* they are in the order you would encounter them as */
-	  /* you circled around vertex i, starting from a boundary/hole */
-	  /* (if a boundary/hole exists). */
+    if(NON_MANIFOLD_VERTEX == 0)
+    {
+      /* --------------------------------------------------------- */
+      /* Sort vertexList, triangList and secondTriList, so that */
+      /* they are in the order you would encounter them as */
+      /* you circled around vertex i, starting from a boundary/hole */
+      /* (if a boundary/hole exists). */
 
-	  /* First, swap 0 and soloIndex: this way, if there is only */
-	  /* one boundary/hole, it occurs before vertexList[0]         */
-	  /*                         and after vertexList[endOfList] */
-	  vert = vertexList[0];
-	  tri1 = triangList[0];
-	  tri2 = secondTriList[0];
+      /* First, swap 0 and soloIndex: this way, if there is only */
+      /* one boundary/hole, it occurs before vertexList[0]         */
+      /*                         and after vertexList[endOfList] */
+      vert = vertexList[0];
+      tri1 = triangList[0];
+      tri2 = secondTriList[0];
 
-	  vertexList[0] = vertexList[soloIndex];    /* this puts */
-	  triangList[0] = secondTriList[soloIndex]; /* the -1 in */
-	  secondTriList[0] = triangList[soloIndex]; /* triangList */
+      vertexList[0] = vertexList[soloIndex];    /* this puts */
+      triangList[0] = secondTriList[soloIndex]; /* the -1 in */
+      secondTriList[0] = triangList[soloIndex]; /* triangList */
 
-	  vertexList[soloIndex] = vert;
-	  triangList[soloIndex] = tri2;
-	  secondTriList[soloIndex] = tri1;
+      vertexList[soloIndex] = vert;
+      triangList[soloIndex] = tri2;
+      secondTriList[soloIndex] = tri1;
 
-	  /* Next, do the sort */
-	  key = 0;
-	  while(key < endOfList) /* W1 */
+      /* Next, do the sort */
+      key = 0;
+      while(key < endOfList) /* W1 */
 	    {
 	      item = key + 1;
 	      FOUND = 0;
 	      while( (item <= endOfList) && !FOUND ) /* W2 */
-		{
-		  if(triangList[item] == secondTriList[key])
-		    {
-		      FOUND = 1;
+        {
+          if(triangList[item] == secondTriList[key])
+          {
+            FOUND = 1;
 
-		      vert = vertexList[key+1];
-		      tri1 = triangList[key+1];
-		      tri2 = secondTriList[key+1];
+            vert = vertexList[key+1];
+            tri1 = triangList[key+1];
+            tri2 = secondTriList[key+1];
 
-		      vertexList[key+1] = vertexList[item];
-		      triangList[key+1] = triangList[item];
-		      secondTriList[key+1] = secondTriList[item];
+            vertexList[key+1] = vertexList[item];
+            triangList[key+1] = triangList[item];
+            secondTriList[key+1] = secondTriList[item];
 
-		      vertexList[item] = vert;
-		      triangList[item] = tri1;
-		      secondTriList[item] = tri2;
-		    }
+            vertexList[item] = vert;
+            triangList[item] = tri1;
+            secondTriList[item] = tri2;
+          }
 
-		  if(secondTriList[item] == secondTriList[key])
-		    {
-		      FOUND = 1;
+          if(secondTriList[item] == secondTriList[key])
+          {
+            FOUND = 1;
 
-		      vert = vertexList[key+1];
-		      tri1 = triangList[key+1];
-		      tri2 = secondTriList[key+1];
+            vert = vertexList[key+1];
+            tri1 = triangList[key+1];
+            tri2 = secondTriList[key+1];
 
-		      vertexList[key+1] = vertexList[item];
-		      triangList[key+1] = secondTriList[item];
-		      secondTriList[key+1] = triangList[item];
+            vertexList[key+1] = vertexList[item];
+            triangList[key+1] = secondTriList[item];
+            secondTriList[key+1] = triangList[item];
 
-		      vertexList[item] = vert;
-		      triangList[item] = tri2;
-		      secondTriList[item] = tri1;
-		    }
+            vertexList[item] = vert;
+            triangList[item] = tri2;
+            secondTriList[item] = tri1;
+          }
 
-		  item++;
-		}/* return to W2 */
+          item++;
+        }/* return to W2 */
 
 	      if(!FOUND)
-		{/* This means that we couldn't find a triangle in
-		    triangList or secondTriList that matched
-		    secondTriList[key]. This implies that i is a
-		    (CONE-ERROR) non-manifold vertex */
+        {/* This means that we couldn't find a triangle in
+            triangList or secondTriList that matched
+            secondTriList[key]. This implies that i is a
+            (CONE-ERROR) non-manifold vertex */
 
-		  NON_MANIFOLD_VERTEX = 2; /* Cone error */
-		  surf->vertexManifoldness[i] = VERT_CONE_ERROR;
-		  surf->manifoldness = SURF_NON_MANIFOLD;
+          NON_MANIFOLD_VERTEX = 2; /* Cone error */
+          surf->vertexManifoldness[i] = VERT_CONE_ERROR;
+          surf->manifoldness = SURF_NON_MANIFOLD;
 
-		}
+        }
 
 	      key++;
 
 	    }/* return to W1 */
 
-	  /* For the example above, we'll have:                */
-	  /* e.g. vertexList =  G  B  E  A   \                  */
-	  /*      triangList = -1  2  3  1    > endOfList = 3   */
-	  /*   secondTriList =  2  3  1 -1   /                  */
-	  /*                   */
-	  /* Note the "/////" ordering:              */
-	  /*      secondTriList[k] = triangList[k+1] */
-	  /*                                         */
-	  /* Done sorting vertexList, triangList and secondTriList */
+      /* For the example above, we'll have:                */
+      /* e.g. vertexList =  G  B  E  A   \                  */
+      /*      triangList = -1  2  3  1    > endOfList = 3   */
+      /*   secondTriList =  2  3  1 -1   /                  */
+      /*                   */
+      /* Note the "/////" ordering:              */
+      /*      secondTriList[k] = triangList[k+1] */
+      /*                                         */
+      /* Done sorting vertexList, triangList and secondTriList */
 
-	} /* Matches if NON_MANIFOLD_VERTEX == 0 */
+    } /* Matches if NON_MANIFOLD_VERTEX == 0 */
 
-      /* (HOMEWORK POINT 3) */
+    /* (HOMEWORK POINT 3) */
 
-      /* ------------------------------------------------------*/
-      surf->NNoV[i] = endOfList + 1;
-      surf->E += surf->NNoV[i];
+    /* ------------------------------------------------------*/
+    surf->NNoV[i] = endOfList + 1;
+    surf->E += surf->NNoV[i];
 
-      if(NON_MANIFOLD_VERTEX == 0)
-	{
-	  if(surf->NNoV[i] - NTaV[i] >= 2)
+    if(NON_MANIFOLD_VERTEX == 0)
+    {
+      if(surf->NNoV[i] - NTaV[i] >= 2)
 	    {
 	      NON_MANIFOLD_VERTEX = 3; /* 2-hole error */
 	      surf->vertexManifoldness[i] = VERT_TWO_HOLE_ERROR;
 	      surf->manifoldness = SURF_NON_MANIFOLD;
 	    }
-	}
+    }
 
-      /* (HOMEWORK POINT 4) */
+    /* (HOMEWORK POINT 4) */
 
-      /* Paste the sorted vertexList for vertex i into Neighbors */
-      /* and triangList and secondTriList into LT1aNE and LT2aNE */
-      /* respectively. Index2[i] tells you where the information */
-      /* for vertex i begins, and NNoV[i] tells you the "length" */
-      /* of the info */
-      surf->Neighbors[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
-      surf->NTaE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
-      surf->LT1aNE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
-      surf->LT2aNE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
-      for(j = 0; j <= endOfList; j++)
-	{
-	  surf->Neighbors[i][j] =  vertexList[j];
-	  if(NON_MANIFOLD_VERTEX != 1)
+    /* Paste the sorted vertexList for vertex i into Neighbors */
+    /* and triangList and secondTriList into LT1aNE and LT2aNE */
+    /* respectively. Index2[i] tells you where the information */
+    /* for vertex i begins, and NNoV[i] tells you the "length" */
+    /* of the info */
+    surf->Neighbors[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
+    surf->NTaE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
+    surf->LT1aNE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
+    surf->LT2aNE[i] = (int*) malloc(surf->NNoV[i]*sizeof(int));
+    for(j = 0; j <= endOfList; j++)
+    {
+      surf->Neighbors[i][j] =  vertexList[j];
+      if(NON_MANIFOLD_VERTEX != 1)
 	    {
 	      surf->LT1aNE[i][j] =  triangList[j];
 	      surf->LT2aNE[i][j] =  secondTriList[j];
 	    }
-	  else
+      else
 	    {
 	      surf->LT1aNE[i][j] =  -1;
 	      surf->LT2aNE[i][j] =  -1;
 	    }
 
 
-	}
-
     }
+
+  }
 
   surf->E /= 2;
 
@@ -881,7 +881,7 @@ void edgeProcess(surface *surf) {
 /* OT[2E]: Opposite Triangle  = OT[ Index2[i] + j] */
 /* OV[2E]: Opposite Vertex = OV[ Index2[i] + j] */
 void oppositeProcess(surface *surf) {
-		     /* Inputs */
+  /* Inputs */
   if(surf == NULL) return;
   int i, j, V = surf->numVertices;
   int t, vA, vB;
@@ -927,72 +927,72 @@ void oppositeProcess(surface *surf) {
      Neighbors[ mod(index2 - 1) ]. */
 
   for(i = 0; i < V; i++)
+  {
+    OT[i] = (int*) malloc(NNoV[i]*sizeof(int));
+    OV[i] = (int*) malloc(NNoV[i]*sizeof(int));
+    for(j = 0; j < NNoV[i]; j++)
     {
-      OT[i] = (int*) malloc(NNoV[i]*sizeof(int));
-      OV[i] = (int*) malloc(NNoV[i]*sizeof(int));
-      for(j = 0; j < NNoV[i]; j++)
-	{
-	  t = LT2aNE[i][j];
-	  if(t == -1)
+      t = LT2aNE[i][j];
+      if(t == -1)
 	    {
 	      OT[i][j] = -1;
 	      OV[i][j] = -1;
 	    }
-	  else /* e1 */
+      else /* e1 */
 	    {
 	      vA = Neighbors[i][j];
 	      /* if index is the last of i's entries, wrap */
 	      /* around to the first of i's entries for vB */
 	      if(j == NNoV[i] - 1)
-		indexPlus1 = 0;
+          indexPlus1 = 0;
 	      else
-		indexPlus1 = j + 1;
+          indexPlus1 = j + 1;
 	      vB = Neighbors[i][indexPlus1];
 
 	      index2 = findIndex(Neighbors[vA], NNoV[vA], vB);
 
 	      if(LT1aNE[vA][index2] == t)
-		{
-		  OT[i][j] = LT2aNE[vA][index2];
+        {
+          OT[i][j] = LT2aNE[vA][index2];
 
-		  if(OT[i][j] == -1)
-		    OV[i][j] = -1;
-		  else
-		    {
-		      /* if index2 is the last of vA's entries, */
-		      /* wrap around to the first of vA's entries */
-		      if(index2 == NNoV[vA] - 1)
-			indexPlus1 = 0;
-		      else
-			indexPlus1 = index2 + 1;
+          if(OT[i][j] == -1)
+            OV[i][j] = -1;
+          else
+          {
+            /* if index2 is the last of vA's entries, */
+            /* wrap around to the first of vA's entries */
+            if(index2 == NNoV[vA] - 1)
+              indexPlus1 = 0;
+            else
+              indexPlus1 = index2 + 1;
 
-		      OV[i][j] = Neighbors[vA][indexPlus1];
-		    }
-		}
+            OV[i][j] = Neighbors[vA][indexPlus1];
+          }
+        }
 	      else /* i.e. LT1aNE[index2] != t */
-		{
-		  OT[i][j] = LT1aNE[vA][index2];
+        {
+          OT[i][j] = LT1aNE[vA][index2];
 
-		  if(OT[i][j] == -1)
-		    OV[i][j] = -1;
-		  else
-		    {
-		      /* if index2 is the first of vA's entries, */
-		      /* wrap around to the last of vA's entries */
-		      if(index2 == 0)
-			indexMinus1 = NNoV[vA] - 1;
-		      else
-			indexMinus1 = index2 - 1;
+          if(OT[i][j] == -1)
+            OV[i][j] = -1;
+          else
+          {
+            /* if index2 is the first of vA's entries, */
+            /* wrap around to the last of vA's entries */
+            if(index2 == 0)
+              indexMinus1 = NNoV[vA] - 1;
+            else
+              indexMinus1 = index2 - 1;
 
-		      OV[i][j] = Neighbors[vA][indexMinus1];
-		    }
-		}/* Matches else for if tri == t */
+            OV[i][j] = Neighbors[vA][indexMinus1];
+          }
+        }/* Matches else for if tri == t */
 
 	    }/* Matches e1: else for if t == -1 */
 
-	}/* Matches for(j = 0; j < NNoV[i]; j++) */
+    }/* Matches for(j = 0; j < NNoV[i]; j++) */
 
-    }/* Matches for(i = 0; i < V; i++) */
+  }/* Matches for(i = 0; i < V; i++) */
 
   return;
 
@@ -1077,25 +1077,25 @@ void consistentOrientation(surface *surf) {
   sense[n0] = 1;
 
   while( !Qempty )
+  {
+    /* Take the information from the item at Qstart */
+    nBef = Q[ Qstart ];
+
+    /* Update Qstart */
+    Qstart++;
+
+    for(i = 0; i < NNoV[nBef]; i++)
     {
-      /* Take the information from the item at Qstart */
-      nBef = Q[ Qstart ];
+      nAft = Neighbors[nBef][i];
 
-      /* Update Qstart */
-      Qstart++;
+      /* if nAft:
+         1) is not on the Q, i.e. has no sense
+         then:
+         1) put it on the Q
+         2) figure out its sense
+      */
 
-      for(i = 0; i < NNoV[nBef]; i++)
-	{
-	  nAft = Neighbors[nBef][i];
-
-	  /* if nAft:
-	     1) is not on the Q, i.e. has no sense
-	     then:
-	     1) put it on the Q
-	     2) figure out its sense
-	  */
-
-	  if( onQ[nAft] == 0 )
+      if( onQ[nAft] == 0 )
 	    {
 
 	      /* 1) Put nAft on the Q */
@@ -1106,89 +1106,89 @@ void consistentOrientation(surface *surf) {
 	      /* 2) Figure out the sense of nAft */
 
 	      /* Go around nAft to find nBef, and
-		 the nodes adjacent to it */
+           the nodes adjacent to it */
 	      for(j = 0; j < NNoV[nAft]; j++)
-		{
-		  if(j < NNoV[nAft] - 1)
-		    indexPlus1 = j + 1;
-		  else
-		    indexPlus1 = 0;
+        {
+          if(j < NNoV[nAft] - 1)
+            indexPlus1 = j + 1;
+          else
+            indexPlus1 = 0;
 
-		  if( Neighbors[nAft][j] == nBef )
-		    nRightOfnAft = Neighbors[nAft][indexPlus1];
+          if( Neighbors[nAft][j] == nBef )
+            nRightOfnAft = Neighbors[nAft][indexPlus1];
 
-		}
+        }
 
 	      /* Go around nBef to find nAft, and
-		 the nodes adjacent to it */
+           the nodes adjacent to it */
 	      for(j = 0; j < NNoV[nBef]; j++)
-		{
-		  if(j < NNoV[nBef] - 1)
-		    indexPlus1 = j + 1;
-		  else
-		    indexPlus1 = 0;
+        {
+          if(j < NNoV[nBef] - 1)
+            indexPlus1 = j + 1;
+          else
+            indexPlus1 = 0;
 
-		  if( Neighbors[nBef][j] == nAft )
-		    nRightOfnBef = Neighbors[nBef][indexPlus1];
+          if( Neighbors[nBef][j] == nAft )
+            nRightOfnBef = Neighbors[nBef][indexPlus1];
 
-		}
+        }
 
 	      /* Figure out sense[nAft] */
 	      if( nRightOfnAft != nRightOfnBef )
-		sense[nAft] =  sense[nBef];
+          sense[nAft] =  sense[nBef];
 	      else
-		sense[nAft] = -sense[nBef];
+          sense[nAft] = -sense[nBef];
 
 	      /* If we have a boundary node nBef propagating to another
-		 boundary node nAft, we have to be careful: what we did
-		 above to figure out the sense of nAft relative to the
-		 sense of nBef is not guaranteed to work.
+           boundary node nAft, we have to be careful: what we did
+           above to figure out the sense of nAft relative to the
+           sense of nBef is not guaranteed to work.
 
-		 If nAft is neither the FIRST nor the LAST node on
-		 nBef's neighbor list, do nothing. (i.e. sense is
-		 correct). Otherwise:
+           If nAft is neither the FIRST nor the LAST node on
+           nBef's neighbor list, do nothing. (i.e. sense is
+           correct). Otherwise:
 
-		 The (boundary) nodes will have the same sense if: nAft
-		 is the FIRST node on nBef's neighbor list AND nBef is
-		 the LAST node on nAft's neighbor list.
+           The (boundary) nodes will have the same sense if: nAft
+           is the FIRST node on nBef's neighbor list AND nBef is
+           the LAST node on nAft's neighbor list.
 
-		 Or if: nAft is the LAST node on nBef's neighbor list
-		 AND nBef is the FIRST node on nAft's neighbor list.  */
+           Or if: nAft is the LAST node on nBef's neighbor list
+           AND nBef is the FIRST node on nAft's neighbor list.  */
 	      if( NNoV[nBef] != NTaV[nBef] )
-		if( NNoV[nAft] != NTaV[nAft] )
-		  { /* Boundary node propagating to a boundary node. */
+          if( NNoV[nAft] != NTaV[nAft] )
+          { /* Boundary node propagating to a boundary node. */
 
-		    if( Neighbors[nBef][0] == nAft )
-		      { /* nAft == FIRST on nBef's NeighborList */
-			index2 = NNoV[nAft] - 1;
-			if( Neighbors[nAft][index2] == nBef )
-			  /* nBef == LAST on nAft's neighbor list. */
-			  sense[nAft] =  sense[nBef];
-			else
-			  sense[nAft] = -sense[nBef];
-		      }
+            if( Neighbors[nBef][0] == nAft )
+            { /* nAft == FIRST on nBef's NeighborList */
+              index2 = NNoV[nAft] - 1;
+              if( Neighbors[nAft][index2] == nBef )
+                /* nBef == LAST on nAft's neighbor list. */
+                sense[nAft] =  sense[nBef];
+              else
+                sense[nAft] = -sense[nBef];
+            }
 
-		    if( Neighbors[nBef][NNoV[nBef] - 1] == nAft )
-		      { /* nAft == LAST node on nBef's NeighborList */
-			index2 = 0;
-			if( Neighbors[nAft][index2] == nBef )
-			  /* nBef == FIRST on nAft's neighbor list. */
-			  sense[nAft] =  sense[nBef];
-			else
-			  sense[nAft] = -sense[nBef];
-		      }
+            if( Neighbors[nBef][NNoV[nBef] - 1] == nAft )
+            { /* nAft == LAST node on nBef's NeighborList */
+              index2 = 0;
+              if( Neighbors[nAft][index2] == nBef )
+                /* nBef == FIRST on nAft's neighbor list. */
+                sense[nAft] =  sense[nBef];
+              else
+                sense[nAft] = -sense[nBef];
+            }
 
-		  }/* matches Boundary node propagating to a boundary node. */
+          }/* matches Boundary node propagating to a boundary node. */
 
 	    }/* matches if( onQ[nAft] == 0 ) */
 
-	}/* matches for(i = 0; i < NNoV[nBef]; i++) */
+    }/* matches for(i = 0; i < NNoV[nBef]; i++) */
 
-      /* Check for Q empty condition */
-      if( Qend == Qstart )
-	Qempty = 1;
+    /* Check for Q empty condition */
+    if( Qend == Qstart )
+      Qempty = 1;
 
-    }/* while( !Qempty ) */
+  }/* while( !Qempty ) */
 
   /* Now that we know the sense of all the nodes (relative to the n0 =
      node 0), reorder the list of Neighbors, LT1aNE, LT2aNE, OT, OV so
@@ -1207,35 +1207,35 @@ void consistentOrientation(surface *surf) {
     OV_out[i] = (int*) malloc(NNoV[i]*sizeof(int));
     if( sense[i] == -1 )
       for(j = 0; j < NNoV[i]; j++)
-	{
-	  index2 = NNoV[i] - 1 - j;
-	  Neighbors_out[i][index2] = Neighbors[i][j];
+      {
+        index2 = NNoV[i] - 1 - j;
+        Neighbors_out[i][index2] = Neighbors[i][j];
 
-	  if( j == 0 )
-	    index3 = 0;
-	  else
-	    index3 = index2 + 1;
-	  LT1aNE_out[i][index3] = LT1aNE[i][j];
+        if( j == 0 )
+          index3 = 0;
+        else
+          index3 = index2 + 1;
+        LT1aNE_out[i][index3] = LT1aNE[i][j];
 
-	  if( j == NNoV[i]-1 )
-	    index4 = j;
-	  else
-	    index4 = index2 - 1;
-	  LT2aNE_out[i][index4] = LT2aNE[i][j];
-	  OT_out[i][index4] = OT[i][j];
-	  OV_out[i][index4] = OV[i][j];
+        if( j == NNoV[i]-1 )
+          index4 = j;
+        else
+          index4 = index2 - 1;
+        LT2aNE_out[i][index4] = LT2aNE[i][j];
+        OT_out[i][index4] = OT[i][j];
+        OV_out[i][index4] = OV[i][j];
 
-	}
+      }
     else
       for(j = 0; j < NNoV[i]; j++)
-	{
-	  Neighbors_out[i][j] = Neighbors[i][j];
-	  LT1aNE_out[i][j] = LT1aNE[i][j];
-	  LT2aNE_out[i][j] = LT2aNE[i][j];
-	  OT_out[i][j] = OT[i][j];
-	  OV_out[i][j] = OV[i][j];
+      {
+        Neighbors_out[i][j] = Neighbors[i][j];
+        LT1aNE_out[i][j] = LT1aNE[i][j];
+        LT2aNE_out[i][j] = LT2aNE[i][j];
+        OT_out[i][j] = OT[i][j];
+        OV_out[i][j] = OV[i][j];
 
-	}
+      }
 
     free(Neighbors[i]);
     free(LT1aNE[i]);
@@ -1298,40 +1298,40 @@ void consistentFaces(surface *surf) {
   int **LT2aNE = surf->LT2aNE;
 
   for(n0 = 0; n0 < V; n0++)
+  {
+
+    for(j = 0; j < NTaV[n0]; j++)
     {
+      nA = Neighbors[n0][j];
+      /* if index is the last of n0's entries, wrap */
+      /* around to the first of n0's entries for nB */
+      if(j < NNoV[n0] - 1)
+        indexPlus1 = j + 1;
+      else
+        indexPlus1 = 0;
+      nB = Neighbors[n0][indexPlus1];
 
-      for(j = 0; j < NTaV[n0]; j++)
-	{
-	  nA = Neighbors[n0][j];
-	  /* if index is the last of n0's entries, wrap */
-	  /* around to the first of n0's entries for nB */
-	  if(j < NNoV[n0] - 1)
-	    indexPlus1 = j + 1;
-	  else
-	    indexPlus1 = 0;
-	  nB = Neighbors[n0][indexPlus1];
-
-	  t  = LT2aNE[n0][j];
-	  surf->faces[t][0] = (unsigned int) nA;
-	  surf->faces[t][1] = (unsigned int) nB;
-	  surf->faces[t][2] = (unsigned int) n0;
-	}
-
+      t  = LT2aNE[n0][j];
+      surf->faces[t][0] = (unsigned int) nA;
+      surf->faces[t][1] = (unsigned int) nB;
+      surf->faces[t][2] = (unsigned int) n0;
     }
+
+  }
 
 }
 
 int findIndex(int *Array,
-	      int segmentLength,
-	      int key)
+              int segmentLength,
+              int key)
 {
   int i;
 
   for(i = 0; i < segmentLength; i++)
-    {
-      if( (int) Array[i] == key )
-	return i;
-    }
+  {
+    if( (int) Array[i] == key )
+      return i;
+  }
 
   return(-1);
 
@@ -1374,45 +1374,45 @@ void cutNonmanifoldVertex(surface *s, int v) {
 
       // try to match an end to an edge node
       if(se->edge[0] == ends[0]) {
-	si = 0;
-	ei = 1;
+        si = 0;
+        ei = 1;
       }
       else if(se->edge[0] == ends[1]) {
-	si = 0;
-	ei = 0;
+        si = 0;
+        ei = 0;
       }
       else if(se->edge[1] == ends[0]) {
-	si = 1;
-	ei = 1;
+        si = 1;
+        ei = 1;
       }
       else if(se->edge[1] == ends[1]) {
-	si = 1;
-	ei = 0;
+        si = 1;
+        ei = 0;
       }
       else {
-	ln = (listNode*) ln->next;
-	i++;
-	continue;
+        ln = (listNode*) ln->next;
+        i++;
+        continue;
       }
 
       // make sure the connecting edge is a manifold edge
       if(s->NTaE[v][se->neighborIndex[si]] < 3) {
-	ends[si] = se->edge[ei];
-	enqueue(curComp,se);
-	removeListNode(star,i);
+        ends[si] = se->edge[ei];
+        enqueue(curComp,se);
+        removeListNode(star,i);
 
-	if(ends[0] == ends[1]) {
-	  ln = NULL;
-	}
-	else {
-	  i = 0;
-	  ln = getListNode(star,0);
-	}
+        if(ends[0] == ends[1]) {
+          ln = NULL;
+        }
+        else {
+          i = 0;
+          ln = getListNode(star,0);
+        }
       }
       else {
-	ends[si] = -1;
-	ln = (listNode*) ln->next;
-	i++;
+        ends[si] = -1;
+        ln = (listNode*) ln->next;
+        i++;
       }
 
     }
@@ -1429,9 +1429,9 @@ void cutNonmanifoldVertex(surface *s, int v) {
     for(ln2 = getListNode(curComp,0); ln2; ln2 = (listNode*) ln2->next) {
       f = ((staredge*) ln2->data)->face;
       for(fi = 0; fi < 3; fi++) {
-	if(s->faces[f][fi] == v) {
-	  s->faces[f][fi] = vi;
-	}
+        if(s->faces[f][fi] == v) {
+          s->faces[f][fi] = vi;
+        }
       }
     }
 
@@ -1464,38 +1464,38 @@ list *buildStar(surface *s, int v) {
     for(j = 0; j < s->NNoV[n]; j++) {
       nn = s->Neighbors[n][j];
       if(nn == v) {
-	continue;
+        continue;
       }
 
       // find nn in v's Neighbors
       found = 0;
       for(k = 0; k < s->NNoV[v]; k++) {
-	if(nn == s->Neighbors[v][k]) {
-	  found = 1;
-	  break;
-	}
+        if(nn == s->Neighbors[v][k]) {
+          found = 1;
+          break;
+        }
       }
 
       if(found) {
-	// determine the face this edge is in with v
+        // determine the face this edge is in with v
 
-	// try to find n in v1TaV and nn in v2TaV or vice versa
-	for(k = 0; k < s->NTaV[v]; k++) {
-	  if((s->v1TaV[v][k] == n && s->v2TaV[v][k] == nn)
-	     || (s->v2TaV[v][k] == n && s->v1TaV[v][k] == nn)) {
+        // try to find n in v1TaV and nn in v2TaV or vice versa
+        for(k = 0; k < s->NTaV[v]; k++) {
+          if((s->v1TaV[v][k] == n && s->v2TaV[v][k] == nn)
+             || (s->v2TaV[v][k] == n && s->v1TaV[v][k] == nn)) {
 
-	    // add the edge, delete repeats later
-	    se = (staredge*) malloc(sizeof(staredge));
-	    se->edge[0] = n;
-	    se->edge[1] = nn;
-	    se->neighborIndex[0] = i;
-	    se->neighborIndex[1] = k;
-	    se->face = s->LTaV[v][k];
+            // add the edge, delete repeats later
+            se = (staredge*) malloc(sizeof(staredge));
+            se->edge[0] = n;
+            se->edge[1] = nn;
+            se->neighborIndex[0] = i;
+            se->neighborIndex[1] = k;
+            se->face = s->LTaV[v][k];
 
-	    enqueue(st,se);
-	    break;
-	  }
-	}
+            enqueue(st,se);
+            break;
+          }
+        }
       }
     }
   }
@@ -1509,12 +1509,12 @@ list *buildStar(surface *s, int v) {
 
       // delete if they represent the same edge
       if(((se->edge[0] == se2->edge[0]
-	   && se->edge[1] == se2->edge[1])
-	  ||
-	  (se->edge[0] == se2->edge[1]
-	   && se->edge[1] == se2->edge[0]))
-	 && se->face == se2->face) {
-	markForDeletion(ln2);
+           && se->edge[1] == se2->edge[1])
+          ||
+          (se->edge[0] == se2->edge[1]
+           && se->edge[1] == se2->edge[0]))
+         && se->face == se2->face) {
+        markForDeletion(ln2);
       }
     }
   }
@@ -1539,16 +1539,16 @@ void buildNTaE(surface *s) {
 
       // find v2 in v1's neighbor list
       for(n = 0; n < s->NNoV[v1]; n++) {
-	if(s->Neighbors[v1][n] == v2) {
-	  s->NTaE[v1][n]++;
-	}
+        if(s->Neighbors[v1][n] == v2) {
+          s->NTaE[v1][n]++;
+        }
       }
 
       // find v1 in v2's neighbor list
       for(n = 0; n < s->NNoV[v2]; n++) {
-	if(s->Neighbors[v2][n] == v1) {
-	  s->NTaE[v2][n]++;
-	}
+        if(s->Neighbors[v2][n] == v1) {
+          s->NTaE[v2][n]++;
+        }
       }
     }
   }
@@ -1588,10 +1588,10 @@ void buildConnectedComponents(surface *surf) {
     lastFind = nextFind;
     for(i = 0; i < V; i++) {
       if(foundCC[i] == 0 && indivMap[i] != -1) {
-	foundCC[i] = 1;
+        foundCC[i] = 1;
       }
       else if(foundCC[i] == 0 && lastFind == nextFind) {
-	nextFind = i;
+        nextFind = i;
       }
     }
 
@@ -1633,18 +1633,18 @@ int *neighborhood(surface *surf, int n0) {
   Qempty = 0;
 
   while( !Qempty )
+  {
+    /* pop vertex i from Q */
+    i = Q[ Qstart ];
+    Qstart++;
+
+    /* Go all the way around i */
+    for(j = 0; j < surf->NNoV[i]; j++)
     {
-      /* pop vertex i from Q */
-      i = Q[ Qstart ];
-      Qstart++;
+      nB = surf->Neighbors[i][j];
 
-      /* Go all the way around i */
-      for(j = 0; j < surf->NNoV[i]; j++)
-	{
-	  nB = surf->Neighbors[i][j];
-
-	  /* if nB has not been hit */
-	  if( nbd[nB] == -1 )
+      /* if nB has not been hit */
+      if( nbd[nB] == -1 )
 	    {
 	      /* 1) set nbd of vertex nB */
 	      nbd[nB] = nbd[i] + 1;
@@ -1656,13 +1656,13 @@ int *neighborhood(surface *surf, int n0) {
 
 	    } /* Matches: if nB has not been hit */
 
-	} /* Gone all the way around i */
+    } /* Gone all the way around i */
 
-      /* Check for Q empty condition */
-      if( Qend == Qstart )
-	Qempty = 1;
+    /* Check for Q empty condition */
+    if( Qend == Qstart )
+      Qempty = 1;
 
-    } /* Matches while( !Qempty ) */
+  } /* Matches while( !Qempty ) */
 
 
   free(Q);
@@ -1702,10 +1702,10 @@ void fixTwoHoleError(surface *s, int v) {
 
       n++;
       if(n == s->NNoV[v]) {
-	n = 0;
+        n = 0;
       }
       if(n == orign) {
-	done = 1;
+        done = 1;
       }
 
     }
@@ -1718,11 +1718,11 @@ void fixTwoHoleError(surface *s, int v) {
       addVertexArr(s,s->vertices[v]);
 
       for(f = 0; f < curTri; f++) {
-	for(fi = 0; fi < 3; fi++) {
-	  if(s->faces[triList[f]][fi] == v) {
-	    s->faces[triList[f]][fi] = vi;
-	  }
-	}
+        for(fi = 0; fi < 3; fi++) {
+          if(s->faces[triList[f]][fi] == v) {
+            s->faces[triList[f]][fi] = vi;
+          }
+        }
       }
     }
 
@@ -1769,11 +1769,11 @@ void fixConeError(surface *s, int v) {
       addVertexArr(s,s->vertices[v]);
 
       for(f = 0; f < curTri; f++) {
-	for(fi = 0; fi < 3; fi++) {
-	  if(s->faces[triList[f]][fi] == v) {
-	    s->faces[triList[f]][fi] = vi;
-	  }
-	}
+        for(fi = 0; fi < 3; fi++) {
+          if(s->faces[triList[f]][fi] == v) {
+            s->faces[triList[f]][fi] = vi;
+          }
+        }
       }
 
       // move the vertex epsilon toward these neighbors

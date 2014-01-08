@@ -157,13 +157,13 @@ void computeSliceContourBounds(list *slices, vector *minbounds, vector *maxbound
       cv = ((contour*) j->data)->vertices;
 
       for(k = getListNode(cv,0); k; k = (listNode*) k->next) {
-	v = (vertex*) k->data;
+        v = (vertex*) k->data;
 
-	/* check bounds */
-	if(v->x < minbounds->x) minbounds->x = v->x;
-	if(v->x > maxbounds->x) maxbounds->x = v->x;
-	if(v->y < minbounds->y) minbounds->y = v->y;
-	if(v->y > maxbounds->y) maxbounds->y = v->y;
+        /* check bounds */
+        if(v->x < minbounds->x) minbounds->x = v->x;
+        if(v->x > maxbounds->x) maxbounds->x = v->x;
+        if(v->y < minbounds->y) minbounds->y = v->y;
+        if(v->y > maxbounds->y) maxbounds->y = v->y;
       }
     }
   }
@@ -174,7 +174,7 @@ void computeSliceContourBounds(list *slices, vector *minbounds, vector *maxbound
  * clones a pair of slices, maintaining adjacency
  */
 void cloneSlices(list *slice1, list *slice2,
-		 list **newSlice1, list **newSlice2) {
+                 list **newSlice1, list **newSlice2) {
 
   listNode *i,*j;
   int ind;
@@ -186,7 +186,7 @@ void cloneSlices(list *slice1, list *slice2,
   *newSlice1 = newList(LIST);
   *newSlice2 = newList(LIST);
 
-/* clone slice 2 first, so we can maintain adjacency */
+  /* clone slice 2 first, so we can maintain adjacency */
   for(i = getListNode(slice2,0); i; i = (listNode*) i->next) {
     newCont = cloneContour((contour*) i->data);
     enqueue(*newSlice2,newCont);
@@ -217,19 +217,19 @@ void deleteEmptySlices(list *slices) {
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     found = 0;
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       verts = ((contour*)cont->data)->vertices;
       if(listSize(verts) > 0) {
-	found = 1;
-	break;
+        found = 1;
+        break;
       }
     }
 
     // delete all contours if empty
     if(!found) {
       for(cont = getListNode((list*)slice->data,0); cont;
-	  cont = (listNode*) cont->next) {
-	deleteContour((contour*) cont->data);
+          cont = (listNode*) cont->next) {
+        deleteContour((contour*) cont->data);
       }
       freeList((list*)slice->data);
       markForDeletion(slice);
@@ -294,7 +294,7 @@ double getIntersliceDistance(list *curSlice, list *lastSlice) {
   }
 
   return fabs(((vertex*) getListNode(curFirst->vertices,0)->data)->z
-	      - ((vertex*) getListNode(lastFirst->vertices,0)->data)->z);
+              - ((vertex*) getListNode(lastFirst->vertices,0)->data)->z);
 }
 
 /**
@@ -310,7 +310,7 @@ int preprocessSliceContours(list *slices) {
 
   if((minSliceInd > 0 || maxSliceInd < listSize(slices)-1) && skipSlices > 1) {
     fprintf(stderr,"WARNING!!!: skipping slices (%d) with minSliceInd (%d) and/or maxSliceInd (%d) overridden!!\n",
-	    skipSlices,minSliceInd,maxSliceInd);
+            skipSlices,minSliceInd,maxSliceInd);
 
     /* fix minSlice and maxSlice  for the new skip */
     //minSliceInd = floor(minSliceInd/skipSlices);
@@ -344,7 +344,7 @@ int preprocessSliceContours(list *slices) {
 
     if(SR_VERBOSE) {
       fprintf(stdout,"resampling contours with vertex distance %lf\n",
-	      lastResampleDist);
+              lastResampleDist);
     }
 
     resampleContoursByDistance(slices,lastResampleDist);
@@ -393,7 +393,7 @@ void copyForwardToBackwardAdjacency(list *slice) {
 
     /* insert contour as an adjacent one to each contour in list */
     for(j = getListNode(curCont->adjacentContours,0); j;
-	j = (listNode*) j->next) {
+        j = (listNode*) j->next) {
       otherSliceCont = (contour*) j->data;
       enqueue(curCont->adjacentBackwardContours,otherSliceCont);
     }
@@ -426,7 +426,7 @@ void buildBackwardAdjacency(list *slice1, list *slice2) {
 
     /* insert this contour as an adjacent one to each contour in list */
     for(j = getListNode(curCont->adjacentContours,0); j;
-	j = (listNode*) j->next) {
+        j = (listNode*) j->next) {
       otherSliceCont = (contour*) j->data;
       enqueue(otherSliceCont->adjacentBackwardContours,curCont);
     }
@@ -453,7 +453,7 @@ list *buildBackwardAdjacencyFromContourPairs(list *contourPairs) {
       enqueue(slice2,cp->c2);
 
       if(cp->c2->adjacentBackwardContours) {
-	freeList(cp->c2->adjacentBackwardContours);
+        freeList(cp->c2->adjacentBackwardContours);
       }
 
       cp->c2->adjacentBackwardContours = newList(LIST);
@@ -520,12 +520,12 @@ int selectVerticesBetween(list *vertices) {
     cur = (vertex*) ln->data;
     if(cur->selected) {
       if(first == NULL) {
-	first = ln;
-	continue;
+        first = ln;
+        continue;
       }
       else if(last == NULL) {
-	last = ln;
-	continue;
+        last = ln;
+        continue;
       }
     }
   }
@@ -725,14 +725,14 @@ void resampleContoursByAngle(list *slices, double angle) {
 
       /* integrate angle swept, delete middle vertices w/ insufficient angle */
       for(v = getListNode(verts,2), i = 2; v; v = (listNode*) v->next, i++) {
-	vert = (vertex*) v->data;
-	cura+=fabs(SR_PI-angleBetweenSegments(prevprev,prev,vert));
-	if(cura >= angle) {
-	  enqueue(newVerts,copyVertex(vert));
-	  prevprev = prev;
-	  prev = vert;
-	  cura = 0.0;
-	}
+        vert = (vertex*) v->data;
+        cura+=fabs(SR_PI-angleBetweenSegments(prevprev,prev,vert));
+        if(cura >= angle) {
+          enqueue(newVerts,copyVertex(vert));
+          prevprev = prev;
+          prev = vert;
+          cura = 0.0;
+        }
       }
 
       cont->vertices = newVerts;
@@ -769,25 +769,25 @@ void deleteRepeatedContourVerts(list *slices) {
   /* delete repeated vertices  */
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       prev = NULL;
       verts = ((contour*)cont->data)->vertices;
       if(listSize(verts) < 2) continue;
 
       for(vert = getListNode(verts,0), i = 0; vert;
-	  vert = (listNode*) vert->next, i++) {
+          vert = (listNode*) vert->next, i++) {
 
-	if(verticesEqual((vertex*)vert->data,prev)) {
-	  markForDeletion(vert);
-	}
-	else {
-	  prev = (vertex*)vert->data;
-	}
+        if(verticesEqual((vertex*)vert->data,prev)) {
+          markForDeletion(vert);
+        }
+        else {
+          prev = (vertex*)vert->data;
+        }
       }
 
       /* test last and first */
       if(verticesEqual((vertex*)getListNode(verts,0)->data,prev)) {
-	markForDeletion(getListNode(verts,0));
+        markForDeletion(getListNode(verts,0));
       }
 
       deleteMarkedNodes(verts);
@@ -807,11 +807,11 @@ void orientContours(list *slices) {
   /* orient contours by flipping contours with negative area */
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       verts = ((contour*)cont->data)->vertices;
       a = contourArea((contour*)cont->data);
       if(a < 0) {
-	reverseList(verts);
+        reverseList(verts);
       }
     }
   }
@@ -830,12 +830,12 @@ void randomizeClosedContourIndexing(list *slices) {
   /* randomize indexing by spliting and joining */
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       c = (contour*) cont->data;
 
       if(c == NULL || c->vertices == NULL || listSize(c->vertices) < 2
-	 || c->closed != CLOSED) {
-	continue;
+         || c->closed != CLOSED) {
+        continue;
       }
 
       verts = c->vertices;
@@ -858,11 +858,11 @@ void numberVertices(list *slices) {
   /* number vertices sequentially in each contour */
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       verts = ((contour*)cont->data)->vertices;
       cur = 0;
       for(vert = getListNode(verts,0); vert; vert = (listNode*) vert->next) {
-	((vertex*)vert->data)->number = cur++;
+        ((vertex*)vert->data)->number = cur++;
       }
 
     }
@@ -878,23 +878,23 @@ void labelBoundaries(list *slices) {
 
   for(slice = getListNode(slices,0); slice; slice = (listNode*) slice->next) {
     for(cont = getListNode((list*)slice->data,0); cont;
-	cont = (listNode*) cont->next) {
+        cont = (listNode*) cont->next) {
       verts = ((contour*)cont->data)->vertices;
 
       if(listSize(verts) < 1) continue;
 
-//      if(((contour*)cont->data)->closed == CLOSED && (!first && !last) &&
+      //      if(((contour*)cont->data)->closed == CLOSED && (!first && !last) &&
 
       ((vertex*) getListNode(verts,0)->data)->boundary
-	= ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
+          = ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
 
       for(vert = getListNode(verts,1); vert && vert->next;
-	  vert = (listNode*) vert->next) {
-	((vertex*)vert->data)->boundary = INTERIOR;
+          vert = (listNode*) vert->next) {
+        ((vertex*)vert->data)->boundary = INTERIOR;
       }
 
       ((vertex*) getListNode(verts,listSize(verts)-1)->data)->boundary
-	= ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
+          = ((contour*)cont->data)->closed == CLOSED ? INTERIOR : BOUNDARY;
     }
   }
 }
@@ -969,7 +969,7 @@ int inContourSkelVert(contour *c, vertex *v) {
        || ((v1->y > v->y) && (v2->y <= v->y))) {
       vt = (v->y - v1->y) / (v2->y - v1->y);
       if (v->x < v1->x + vt * (v2->x - v1->x)) {
-	cn++;
+        cn++;
       }
     }
   }
@@ -1057,25 +1057,25 @@ int getContourSkeleton(contour* c, list **vertices, list **edges) {
       // find instances in edges and remove them
       replaceV = NULL;
       for(ln2 = getListNode(*edges,0); ln2; ln2 = (listNode*) ln2->next) {
-	e = (edge*) ln2->data;
-	if(e->v1 == v) {
-	  if(replaceV == NULL) {
-	    replaceV = e->v2;
-	    markForDeletion(ln2);
-	  }
-	  else {
-	    e->v1 = replaceV;
-	  }
-	}
-	else if(e->v2 == v) {
-	  if(replaceV == NULL) {
-	    replaceV = e->v1;
-	    markForDeletion(ln2);
-	  }
-	  else {
-	    e->v2 = replaceV;
-	  }
-	}
+        e = (edge*) ln2->data;
+        if(e->v1 == v) {
+          if(replaceV == NULL) {
+            replaceV = e->v2;
+            markForDeletion(ln2);
+          }
+          else {
+            e->v1 = replaceV;
+          }
+        }
+        else if(e->v2 == v) {
+          if(replaceV == NULL) {
+            replaceV = e->v1;
+            markForDeletion(ln2);
+          }
+          else {
+            e->v2 = replaceV;
+          }
+        }
       }
     }
   }
@@ -1106,7 +1106,7 @@ void writeTrianglePolyFile(contour *c, char *filename) {
   fp = fopen(filename,"w");
   if(fp == NULL) {
     fprintf(stderr,"error: failed in opening file %s for writing poly file.\n",
-	    filename);
+            filename);
     return;
   }
 
@@ -1121,7 +1121,7 @@ void writeTrianglePolyFile(contour *c, char *filename) {
 
   /* write the edge header */
   fprintf(fp,"%d 0\n",
-	  (c->closed == CLOSED) ? listSize(vertices) : listSize(vertices) - 1);
+          (c->closed == CLOSED) ? listSize(vertices) : listSize(vertices) - 1);
 
   /* write the edges */
   for(i = 0; i < listSize(vertices) - 1; i++) {

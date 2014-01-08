@@ -181,7 +181,7 @@ int expandVertices(surface *surf, int amount) {
   int *oldBoundaryness;
 
   fprintf(stderr,"expanding a surface from %d to %d vertices.\n",
-	  surf->maxVertices, amount);
+          surf->maxVertices, amount);
 
   /* validate */
   if(surf == NULL) return SR_FAILURE;
@@ -237,7 +237,7 @@ int expandFaces(surface *surf, int amount) {
   unsigned int **oldFaces;
 
   fprintf(stderr,"expanding a surface from %d to %d faces.\n",
-	  surf->maxFaces, amount);
+          surf->maxFaces, amount);
 
   /* validate */
   if(surf == NULL) return SR_FAILURE;
@@ -366,12 +366,12 @@ int addVertexCoordNoDuplicate(surface *surf, double x, double y, double z, doubl
     surf->numVertices++;
   }
   else if(boundary == BRANCHED_BOUNDARY
-	  &&
-	  surf->vertexBoundaryness[index] != BRANCHED_BOUNDARY) {
+          &&
+          surf->vertexBoundaryness[index] != BRANCHED_BOUNDARY) {
     surf->vertexBoundaryness[index] = BRANCHED_BOUNDARY;
   }
   else if(boundary == BOUNDARY
-	  && surf->vertexBoundaryness[index] != BOUNDARY) {
+          && surf->vertexBoundaryness[index] != BOUNDARY) {
     surf->vertexBoundaryness[index] = BOUNDARY;
   }
 
@@ -463,22 +463,22 @@ int addFaceArr(surface *surf, int *inds) {
 surface *combineSurfaces(surface *surf1, surface *surf2) {
   surface *surf;
   int curV = 0,
-    curV1 = 0,
-    curV2 = 0,
-    curF = 0,
-    curF1 = 0,
-    curF2 = 0;
+      curV1 = 0,
+      curV2 = 0,
+      curF = 0,
+      curF1 = 0,
+      curF2 = 0;
 
   /* validate */
   if(surf1 == NULL || surf2 == NULL) return NULL;
 
   /* create the surface */
   surf = createSurface(surf1->numVertices
-		       +surf2->numVertices
-		       +DEFAULT_MAX_VERTICES,
-		       surf1->numFaces
-		       +surf2->numFaces
-		       +DEFAULT_MAX_FACES);
+                       +surf2->numVertices
+                       +DEFAULT_MAX_VERTICES,
+                       surf1->numFaces
+                       +surf2->numFaces
+                       +DEFAULT_MAX_FACES);
   if(surf == NULL) return NULL;
 
   /* combine the vertices */
@@ -499,17 +499,17 @@ surface *combineSurfaces(surface *surf1, surface *surf2) {
     /* test if we should add more surf1 faces */
     if(curF1 < surf1->numFaces) {
       addFaceInd(surf,
-		 surf1->faces[curF1][0],
-		 surf1->faces[curF1][1],
-		 surf1->faces[curF1][2]);
+                 surf1->faces[curF1][0],
+                 surf1->faces[curF1][1],
+                 surf1->faces[curF1][2]);
       curF1++;
       curF++;
     }
     else if(curF2 < surf2->numFaces) {
       addFaceInd(surf,
-		 surf2->faces[curF2][0]+surf1->numVertices,
-		 surf2->faces[curF2][1]+surf1->numVertices,
-		 surf2->faces[curF2][2]+surf1->numVertices);
+                 surf2->faces[curF2][0]+surf1->numVertices,
+                 surf2->faces[curF2][1]+surf1->numVertices,
+                 surf2->faces[curF2][2]+surf1->numVertices);
       curF2++;
       curF++;
     }
@@ -522,9 +522,9 @@ surface *combineSurfaces(surface *surf1, surface *surf2) {
  * build a surface structure from a face list
  */
 surface *buildSurfaceFromFaceList(list *faceList) {
-/*   int v1 = 0, v2 = 0, v3 = 0; */
-/*   listNode *i; */
-/*   face *f; */
+  /*   int v1 = 0, v2 = 0, v3 = 0; */
+  /*   listNode *i; */
+  /*   face *f; */
 
   /* create a surface hopefully big enough to hold the verts and faces */
   surface * surf = createSurface(2*listSize(faceList),2*listSize(faceList));
@@ -532,30 +532,30 @@ surface *buildSurfaceFromFaceList(list *faceList) {
 
   addFaceListToSurface(surf,faceList);
 
-/*   for(i = getListNode(faceList,0); i; i = (listNode*) i->next) { */
-/*     f = (face*) i->data; */
+  /*   for(i = getListNode(faceList,0); i; i = (listNode*) i->next) { */
+  /*     f = (face*) i->data; */
 
-/*     /\* find or add each vertex *\/ */
-/*     if(SR_FAILURE == (v1 = findVertexStruct(surf,f->left->v1))) { */
-/*       v1 = addVertexStruct(surf,f->left->v1); */
-/*     } */
-/*     if(SR_FAILURE == (v2 = findVertexStruct(surf,f->left->v2))) { */
-/*       v2 = addVertexStruct(surf,f->left->v2); */
-/*     } */
-/*     if(verticesEqual(f->left->v1,f->right->v1)) { */
-/*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v2))) { */
-/*      v3 = addVertexStruct(surf,f->right->v2); */
-/*       } */
-/*     } */
-/*     else { */
-/*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v1))) { */
-/*      v3 = addVertexStruct(surf,f->right->v1); */
-/*       } */
-/*     } */
+  /*     /\* find or add each vertex *\/ */
+  /*     if(SR_FAILURE == (v1 = findVertexStruct(surf,f->left->v1))) { */
+  /*       v1 = addVertexStruct(surf,f->left->v1); */
+  /*     } */
+  /*     if(SR_FAILURE == (v2 = findVertexStruct(surf,f->left->v2))) { */
+  /*       v2 = addVertexStruct(surf,f->left->v2); */
+  /*     } */
+  /*     if(verticesEqual(f->left->v1,f->right->v1)) { */
+  /*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v2))) { */
+  /*      v3 = addVertexStruct(surf,f->right->v2); */
+  /*       } */
+  /*     } */
+  /*     else { */
+  /*       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v1))) { */
+  /*      v3 = addVertexStruct(surf,f->right->v1); */
+  /*       } */
+  /*     } */
 
-/*     /\* add the face *\/ */
-/*     addFaceInd(surf,v1,v2,v3); */
-/*   } */
+  /*     /\* add the face *\/ */
+  /*     addFaceInd(surf,v1,v2,v3); */
+  /*   } */
 
   return surf;
 }
@@ -584,12 +584,12 @@ void addFaceListToSurface(surface *surf, list *faceList) {
     }
     if(verticesEqual(f->left->v1,f->right->v1)) {
       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v2))) {
-	v3 = addVertexStruct(surf,f->right->v2);
+        v3 = addVertexStruct(surf,f->right->v2);
       }
     }
     else {
       if(SR_FAILURE == (v3 = findVertexStruct(surf,f->right->v1))) {
-	v3 = addVertexStruct(surf,f->right->v1);
+        v3 = addVertexStruct(surf,f->right->v1);
       }
     }
 
@@ -614,18 +614,18 @@ list *capContour(contour *cont, enum CAPPING_METHOD cappingMethod, double z) {
 
   /* build a cap based on the method */
   switch(cappingMethod) {
-  case TRIANGULATE:
-    retList = triangulateContour(cont);
-    break;
-  case TILE_SKELETON:
-    retList = capContourSkeleton(cont,z);
-    break;
-  case TILE_POINT:
-    retList = capContourPoint(cont,z);
-    break;
-  default:
-    markAVertexAsBoundary(cont);
-    break;
+    case TRIANGULATE:
+      retList = triangulateContour(cont);
+      break;
+    case TILE_SKELETON:
+      retList = capContourSkeleton(cont,z);
+      break;
+    case TILE_POINT:
+      retList = capContourPoint(cont,z);
+      break;
+    default:
+      markAVertexAsBoundary(cont);
+      break;
   }
 
   return retList;
@@ -698,18 +698,18 @@ list *capContourSkeleton(contour *cont, double z) {
     for(ln2 = getListNode(skelEdges,0); ln2; ln2 = (listNode*) ln2->next) {
       e = (edge*) ln2->data;
       if(e->v1 == v && e->v2 != NULL) {
-	vlist[i][curV] = e->v2;
-	curV++;
+        vlist[i][curV] = e->v2;
+        curV++;
       }
       else if(e->v2 == v && e->v1 != NULL) {
-	vlist[i][curV] = e->v1;
-	curV++;
+        vlist[i][curV] = e->v1;
+        curV++;
       }
 
       if(curV > MAX_SKEL_N) {
-	fprintf(stderr,"FOUND A SKEL VERTEX WITH TOO MANY NEIGHBORS!\n");
-	curV--;
-	break;
+        fprintf(stderr,"FOUND A SKEL VERTEX WITH TOO MANY NEIGHBORS!\n");
+        curV--;
+        break;
       }
     }
     vlist[i][curV] = NULL;
@@ -727,16 +727,16 @@ list *capContourSkeleton(contour *cont, double z) {
     for(i = 0; vlist[v->number][i]; i++) {
       otherV = vlist[v->number][i];
       if(dist(*v,*otherV) < lastResampleDist) {
-	// found one to delete, shift the list to cover it
-	removeAdjacentEntry(vlist[v->number],otherV);
+        // found one to delete, shift the list to cover it
+        removeAdjacentEntry(vlist[v->number],otherV);
 
-	// copy the adjacent list for the deleted node here
-	appendAdjacentEntries(vlist,v,otherV);
+        // copy the adjacent list for the deleted node here
+        appendAdjacentEntries(vlist,v,otherV);
 
-	// erase all adajcency entries for removed vertex
-	vlist[otherV->number][0] = NULL;
+        // erase all adajcency entries for removed vertex
+        vlist[otherV->number][0] = NULL;
 
-	i--;
+        i--;
       }
     }
   }
@@ -767,10 +767,10 @@ list *capContourSkeleton(contour *cont, double z) {
     do {
       /* add the current vertex as a vertex in the contour */
       if(-1 != findInListI(skelCont->vertices,v)) {
-	enqueue(skelCont->vertices,v);
+        enqueue(skelCont->vertices,v);
       }
       else {
-	enqueue(skelCont->vertices,copyVertex(v));
+        enqueue(skelCont->vertices,copyVertex(v));
       }
 
       /* search for the leftmost adjacent vertex */
@@ -783,28 +783,28 @@ list *capContourSkeleton(contour *cont, double z) {
       /* if there is only one neighbor, make it v */
       //if(listSize(edgeList) == 1) {
       if(vlist[i][1] == NULL) {
-	lastV = v;
-	//v = (vertex*) getListNode(edgeList,0)->data;
-	v = vlist[i][0];
-	continue;
+        lastV = v;
+        //v = (vertex*) getListNode(edgeList,0)->data;
+        v = vlist[i][0];
+        continue;
       }
 
       /* otherwise search neighbors */
       //for(ln = getListNode(edgeList,0); ln; ln = (listNode*) ln->next) {
       for(curV = 0; curV < MAX_SKEL_N && vlist[i][curV] != NULL; curV++) {
-	//otherV = (vertex*) ln->data;
-	otherV = vlist[i][curV];
-	otherAngle = unwrap(atan2(otherV->y-v->y,otherV->x-v->x));
+        //otherV = (vertex*) ln->data;
+        otherV = vlist[i][curV];
+        otherAngle = unwrap(atan2(otherV->y-v->y,otherV->x-v->x));
 
-	diffAngle = unwrap(curAngle-otherAngle);
-	if(lastV == otherV) {
-	  diffAngle = 0;//2*SR_PI;
-	}
+        diffAngle = unwrap(curAngle-otherAngle);
+        if(lastV == otherV) {
+          diffAngle = 0;//2*SR_PI;
+        }
 
-	if(diffAngle > minAngle) {
-	  minAngle = diffAngle;
-	  minV = otherV;
-	}
+        if(diffAngle > minAngle) {
+          minAngle = diffAngle;
+          minV = otherV;
+        }
       }
 
       lastV = v;
@@ -904,7 +904,7 @@ int contourIsCircular(contour *cont) {
   }
 
   circularity = gsl_stats_sd(dist,1,listSize(cont->vertices))
-    / gsl_stats_mean(dist,1,listSize(cont->vertices));
+      / gsl_stats_mean(dist,1,listSize(cont->vertices));
 
   free(dist);
 
@@ -948,7 +948,7 @@ void removeAdjacentEntry(vertex **vlist, vertex *otherV) {
   for(i = 0; vlist[i]; i++) {
     if(vlist[i] == otherV) {
       for(j = i+1; vlist[j]; j++) {
-	vlist[j-1] = vlist[j];
+        vlist[j-1] = vlist[j];
       }
       vlist[j-1] = NULL;
       i--;
@@ -1011,10 +1011,10 @@ void fillHoles(surface *surf, int numHolesLeft) {
 
     if(SR_VERBOSE) {
       if(surf->manifoldness != SURF_MANIFOLD) {
-	fprintf(stdout,"failed\n");
+        fprintf(stdout,"failed\n");
       }
       else {
-	fprintf(stdout,"succeded\n");
+        fprintf(stdout,"succeded\n");
       }
     }
 
@@ -1027,7 +1027,7 @@ void fillHoles(surface *surf, int numHolesLeft) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"surface has %d boundaries, fixing...\n",
-	    listSize(boundaries));
+            listSize(boundaries));
   }
 
   // sort the boundaries in decending order of number of vertices
@@ -1051,7 +1051,7 @@ void fillHoles(surface *surf, int numHolesLeft) {
   if(SR_VERBOSE) {
     boundaries = getBoundaries(surf);
     fprintf(stdout,"surface now has %d boundaries\n",
-	    listSize(boundaries));
+            listSize(boundaries));
     freeListAndData(boundaries);
   }
 
@@ -1081,11 +1081,11 @@ void fillBranchedHoles(surface *surf) {
 
     if(SR_VERBOSE) {
       if(surf->manifoldness != SURF_MANIFOLD) {
-	fprintf(stdout,"failed\n");
-	return;
+        fprintf(stdout,"failed\n");
+        return;
       }
       else {
-	fprintf(stdout,"succeded\n");
+        fprintf(stdout,"succeded\n");
       }
     }
 
@@ -1098,7 +1098,7 @@ void fillBranchedHoles(surface *surf) {
 
   if(SR_VERBOSE) {
     fprintf(stdout,"surface has %d boundaries, fixing...\n",
-	    listSize(boundaries));
+            listSize(boundaries));
   }
 
   // fill the desired boundaries
@@ -1106,16 +1106,16 @@ void fillBranchedHoles(surface *surf) {
     boundary = (list*) ln->data;
 
     // debugging
-//    for(ln2 = getListNode(boundary,0), v = 0; ln2; ln2 = (listNode*) ln2->next, v++) {
-//      printf("vert %d boundaryness == %d\n",v,surf->vertexBoundaryness[(int) ln2->data]);
-//    }
-//    printf("\n");
+    //    for(ln2 = getListNode(boundary,0), v = 0; ln2; ln2 = (listNode*) ln2->next, v++) {
+    //      printf("vert %d boundaryness == %d\n",v,surf->vertexBoundaryness[(int) ln2->data]);
+    //    }
+    //    printf("\n");
 
     // find a boundary that shouldnt be a boundary
     for(ln2 = getListNode(boundary,0); ln2; ln2 = (listNode*) ln2->next) {
       v = (long) ln2->data;
       if(surf->vertexBoundaryness[v] == BOUNDARY) {
-	break;
+        break;
       }
     }
 
@@ -1139,7 +1139,7 @@ void fillBranchedHoles(surface *surf) {
     if(SR_VERBOSE) {
       boundaries = getBoundaries(surf);
       fprintf(stdout,"surface now has %d boundaries\n",
-	      listSize(boundaries));
+              listSize(boundaries));
       freeListAndData(boundaries);
     }
   }
@@ -1171,89 +1171,89 @@ void fillBranchedHolesOld(list *contourPairs, surface *surf) {
 
       // one: the seat of the pants
       for(j = (listNode*) i->next; j; j = (listNode*) j->next) {
-	ocp = (contourPair*) j->data;
+        ocp = (contourPair*) j->data;
 
-	if(isBranchedBoundary(ocp)) {
-	  // try to match the branched contours
+        if(isBranchedBoundary(ocp)) {
+          // try to match the branched contours
 
-	  // decide which contours have a common origin, so would have
-	  // adjacent contour verts
-	  if(cp->c1->origin == ocp->c1->origin) {
-	    c1 = cp->c1;
-	    c2 = cp->c2;
-	    oc1 = ocp->c1;
-	    oc2 = ocp->c2;
-	  }
-	  else {
-	    c1 = cp->c2;
-	    c2 = cp->c1;
-	    oc1 = ocp->c2;
-	    oc2 = ocp->c1;
-	  }
+          // decide which contours have a common origin, so would have
+          // adjacent contour verts
+          if(cp->c1->origin == ocp->c1->origin) {
+            c1 = cp->c1;
+            c2 = cp->c2;
+            oc1 = ocp->c1;
+            oc2 = ocp->c2;
+          }
+          else {
+            c1 = cp->c2;
+            c2 = cp->c1;
+            oc1 = ocp->c2;
+            oc2 = ocp->c1;
+          }
 
-	  // get the first contour ordering and endpoints
-	  c1n = listSize(c1->vertices);
+          // get the first contour ordering and endpoints
+          c1n = listSize(c1->vertices);
           c2n = listSize(c2->vertices);
 
           c10 = (vertex*) getListNode(c1->vertices,0)->data;
           c1e = (vertex*) getListNode(c1->vertices,c1n-1)->data;
           c20 = getAdjacentVertex(surf, c10,
-                        (vertex*) getListNode(c2->vertices,0)->data,
-                        (vertex*) getListNode(c2->vertices,c2n-1)->data);
+                                  (vertex*) getListNode(c2->vertices,0)->data,
+                                  (vertex*) getListNode(c2->vertices,c2n-1)->data);
           c2e = (c20 == (vertex*) getListNode(c2->vertices,0)->data)
-	    ? (vertex*) getListNode(c2->vertices,c2n-1)->data
-	    : (vertex*) getListNode(c2->vertices,0)->data;
+              ? (vertex*) getListNode(c2->vertices,c2n-1)->data
+              : (vertex*) getListNode(c2->vertices,0)->data;
 
 
-	  // get the other contours ordering and endpoints
-	  oc1n = listSize(oc1->vertices);
-	  oc2n = listSize(oc2->vertices);
+          // get the other contours ordering and endpoints
+          oc1n = listSize(oc1->vertices);
+          oc2n = listSize(oc2->vertices);
 
-	  oc10 = (vertex*) getListNode(oc1->vertices,0)->data;
-	  oc1e = (vertex*) getListNode(oc1->vertices,oc1n-1)->data;
-	  oc20 = getAdjacentVertex(surf, oc10,
-		(vertex*) getListNode(oc2->vertices,0)->data,
-		(vertex*) getListNode(oc2->vertices,oc2n-1)->data);
-	  oc2e = (oc20 == (vertex*) getListNode(oc2->vertices,0)->data)
-	    ? (vertex*) getListNode(oc2->vertices,oc2n-1)->data
-	    : (vertex*) getListNode(oc2->vertices,0)->data;
+          oc10 = (vertex*) getListNode(oc1->vertices,0)->data;
+          oc1e = (vertex*) getListNode(oc1->vertices,oc1n-1)->data;
+          oc20 = getAdjacentVertex(surf, oc10,
+                                   (vertex*) getListNode(oc2->vertices,0)->data,
+                                   (vertex*) getListNode(oc2->vertices,oc2n-1)->data);
+          oc2e = (oc20 == (vertex*) getListNode(oc2->vertices,0)->data)
+              ? (vertex*) getListNode(oc2->vertices,oc2n-1)->data
+              : (vertex*) getListNode(oc2->vertices,0)->data;
 
-	  // decide if there is a valid branched boundary. by testing if the
-	  // contour endpoints were adjacent on the original contours if so,
-	  // fill the boundary
-	  if(verticesOriginallyAdjacent(c1,oc1,c10,oc10)
-	     && verticesOriginallyAdjacent(c1,oc1,c1e,oc1e)) {
+          // decide if there is a valid branched boundary. by testing if the
+          // contour endpoints were adjacent on the original contours if so,
+          // fill the boundary
+          if(verticesOriginallyAdjacent(c1,oc1,c10,oc10)
+             && verticesOriginallyAdjacent(c1,oc1,c1e,oc1e)) {
 
-	    plist = newList(LIST);
-	    enqueue(plist,c10);
-	    enqueue(plist,c20);
-	    enqueue(plist,c2e);
-	    enqueue(plist,c1e);
-	    enqueue(plist,oc1e);
-	    enqueue(plist,oc2e);
-	    enqueue(plist,oc20);
-	    enqueue(plist,oc20);
+            plist = newList(LIST);
+            enqueue(plist,c10);
+            enqueue(plist,c20);
+            enqueue(plist,c2e);
+            enqueue(plist,c1e);
+            enqueue(plist,oc1e);
+            enqueue(plist,oc2e);
+            enqueue(plist,oc20);
+            enqueue(plist,oc20);
 
-	    add3DPolyToSurf(surf,plist);
-	    freeList(plist);
-	  }
-	  else if(verticesOriginallyAdjacent(c1,oc1,c10,oc1e)
-	     && verticesOriginallyAdjacent(c1,oc1,c1e,oc10)) {
+            add3DPolyToSurf(surf,plist);
+            freeList(plist);
+          }
+          else if(verticesOriginallyAdjacent(c1,oc1,c10,oc1e)
+                  && verticesOriginallyAdjacent(c1,oc1,c1e,oc10)) {
 
-	    plist = newList(LIST);
-	    enqueue(plist,c10);
-	    enqueue(plist,c20);
-	    enqueue(plist,c2e);
-	    enqueue(plist,c1e);
-	    enqueue(plist,oc10);
-	    enqueue(plist,oc20);
-	    enqueue(plist,oc2e);
-	    enqueue(plist,oc2e);
+            plist = newList(LIST);
+            enqueue(plist,c10);
+            enqueue(plist,c20);
+            enqueue(plist,c2e);
+            enqueue(plist,c1e);
+            enqueue(plist,oc10);
+            enqueue(plist,oc20);
+            enqueue(plist,oc2e);
+            enqueue(plist,oc2e);
 
-	    add3DPolyToSurf(surf,plist);
-	    freeList(plist);
-	  }
-	}
+            add3DPolyToSurf(surf,plist);
+            freeList(plist);
+          }
+        }
       }
 
       // two: the thumb
@@ -1324,9 +1324,9 @@ vertex *getAdjacentVertex(surface *surf, vertex *v0, vertex *v10, vertex *v11) {
 
   vertex v;
   int i,
-    v0i = -1,
-    v10i = -1,
-    v11i = -1;
+      v0i = -1,
+      v10i = -1,
+      v11i = -1;
 
   // search the vertices for v0, v10 and v11
   for(i = 0; i < surf->numVertices; i++) {
@@ -1354,14 +1354,14 @@ vertex *getAdjacentVertex(surface *surf, vertex *v0, vertex *v10, vertex *v11) {
        || surf->faces[i][1] == v0i
        || surf->faces[i][2] == v0i) {
       if(surf->faces[i][0] == v10i
-	 || surf->faces[i][1] == v10i
-	 || surf->faces[i][2] == v10i) {
-	return v10;
+         || surf->faces[i][1] == v10i
+         || surf->faces[i][2] == v10i) {
+        return v10;
       }
       if(surf->faces[i][0] == v11i
-	 || surf->faces[i][1] == v11i
-	 || surf->faces[i][2] == v11i) {
-	return v11;
+         || surf->faces[i][1] == v11i
+         || surf->faces[i][2] == v11i) {
+        return v11;
       }
     }
   }
@@ -1420,19 +1420,19 @@ void add3DPolyToSurf(surface *surf, list *plist) {
       free(curCost);
 
       for(m = i+2; m < k; m++) {
-	curCost = getPolyTilingTriangleCost(surf,vlist[i],vlist[m],vlist[k]);
-	curCost->x += W[i][m].x + W[m][k].x;
-	curCost->y += W[i][m].y + W[m][k].y;
-	//fprintf(stdout,"%d %d %d %g\n", i, k, m, curCost->x);
+        curCost = getPolyTilingTriangleCost(surf,vlist[i],vlist[m],vlist[k]);
+        curCost->x += W[i][m].x + W[m][k].x;
+        curCost->y += W[i][m].y + W[m][k].y;
+        //fprintf(stdout,"%d %d %d %g\n", i, k, m, curCost->x);
 
-	if(curCost->x < W[i][k].x
-	   || (fabs(curCost->x - W[i][k].x) < SR_TOL
-	       && curCost->y < W[i][k].y)) {
-	  W[i][k] = *curCost;
-	  lambda[i][k] = m;
+        if(curCost->x < W[i][k].x
+           || (fabs(curCost->x - W[i][k].x) < SR_TOL
+               && curCost->y < W[i][k].y)) {
+          W[i][k] = *curCost;
+          lambda[i][k] = m;
 
-	}
-	free(curCost);
+        }
+        free(curCost);
       }
 
     }
@@ -1500,17 +1500,17 @@ vector *getPolyTilingTriangleCost(surface *surf, int v1, int v2, int v3) {
   // find max dihedral angle (max additive inverseof the dot product) in
   // neighboring triangles
   getFaceNormalV(surf->vertices[v1],
-		 surf->vertices[v2],
-		 surf->vertices[v3],
-		 &norm1);
+                 surf->vertices[v2],
+                 surf->vertices[v3],
+                 &norm1);
   n = findIndex(surf->Neighbors[v1],surf->NNoV[v1],v2);
   if(n > -1) {
     f = surf->faces[surf->LT1aNE[v1][n] == -1
-		    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
+                    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
     getFaceNormalV(surf->vertices[f[0]],
-		   surf->vertices[f[1]],
-		   surf->vertices[f[2]],
-		   &norm2);
+                   surf->vertices[f[1]],
+                   surf->vertices[f[2]],
+                   &norm2);
     if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
@@ -1519,11 +1519,11 @@ vector *getPolyTilingTriangleCost(surface *surf, int v1, int v2, int v3) {
   n = findIndex(surf->Neighbors[v1],surf->NNoV[v1],v3);
   if(n > -1) {
     f = surf->faces[surf->LT1aNE[v1][n] == -1
-		    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
+                    ? surf->LT2aNE[v1][n] : surf->LT1aNE[v1][n]];
     getFaceNormalV(surf->vertices[f[0]],
-		   surf->vertices[f[1]],
-		   surf->vertices[f[2]],
-		   &norm2);
+                   surf->vertices[f[1]],
+                   surf->vertices[f[2]],
+                   &norm2);
     if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
@@ -1532,11 +1532,11 @@ vector *getPolyTilingTriangleCost(surface *surf, int v1, int v2, int v3) {
   n = findIndex(surf->Neighbors[v2],surf->NNoV[v2],v3);
   if(n > -1) {
     f = surf->faces[surf->LT1aNE[v2][n] == -1
-		    ? surf->LT2aNE[v2][n] : surf->LT1aNE[v2][n]];
+                    ? surf->LT2aNE[v2][n] : surf->LT1aNE[v2][n]];
     getFaceNormalV(surf->vertices[f[0]],
-		   surf->vertices[f[1]],
-		   surf->vertices[f[2]],
-		   &norm2);
+                   surf->vertices[f[1]],
+                   surf->vertices[f[2]],
+                   &norm2);
     if(-dot(norm1,norm2) > cost->x) {
       cost->x = -dot(norm1,norm2);
     }
@@ -1680,8 +1680,8 @@ int verticesEqual(vertex *v1, vertex *v2) {
   if(v1 == NULL || v2 == NULL) return 0;
 
   return fabs(v1->x-v2->x) < SR_TOL
-    && fabs(v1->y-v2->y) < SR_TOL
-    && fabs(v1->z-v2->z) < SR_TOL;
+      && fabs(v1->y-v2->y) < SR_TOL
+      && fabs(v1->z-v2->z) < SR_TOL;
 }
 
 /**
@@ -1815,9 +1815,9 @@ list *triangulateContour(contour *c) {
  */
 int edgesIntersect(edge *e1, edge *e2) {
   return segmentsIntersect(e1->v1->x, e1->v1->y, e1->v1->z,
-			   e1->v2->x, e1->v2->y, e1->v2->z,
-			   e2->v1->x, e2->v1->y, e2->v1->z,
-			   e2->v2->x, e2->v2->y, e2->v2->z);
+                           e1->v2->x, e1->v2->y, e1->v2->z,
+                           e2->v1->x, e2->v1->y, e2->v1->z,
+                           e2->v2->x, e2->v2->y, e2->v2->z);
 }
 
 /**
@@ -1825,9 +1825,9 @@ int edgesIntersect(edge *e1, edge *e2) {
  * the end points of two three dimensional segments
  */
 int segmentsIntersect(float x00, float y00, float z00,
-		      float x01, float y01, float z01,
-		      float x10, float y10, float z10,
-		      float x11, float y11, float z11) {
+                      float x01, float y01, float z01,
+                      float x10, float y10, float z10,
+                      float x11, float y11, float z11) {
   vector u,v,w,w2;
   float dist,tmp,s,t,t0,t1;
 
@@ -2282,8 +2282,8 @@ void computeVertexNormals(surface *surf) {
 
     /* get this face normal */
     getFaceNormalV(surf->vertices[surf->faces[i][0]],
-		   surf->vertices[surf->faces[i][1]],
-		   surf->vertices[surf->faces[i][2]], v);
+                   surf->vertices[surf->faces[i][1]],
+                   surf->vertices[surf->faces[i][2]], v);
 
     /* add the face normal to the list of faces for the 3 vertices */
     enqueue(faceNormalsAtVertex[surf->faces[i][0]],v);
@@ -2351,8 +2351,8 @@ void computeFaceNormals(surface *surf) {
   /* compute the normal for each face */
   for(i = 0; i < surf->numFaces; i++) {
     getFaceNormalV(surf->vertices[surf->faces[i][0]],
-		   surf->vertices[surf->faces[i][1]],
-		   surf->vertices[surf->faces[i][2]], &v);
+                   surf->vertices[surf->faces[i][1]],
+                   surf->vertices[surf->faces[i][2]], &v);
 
     /* allocate and assign */
     surf->faceNormals[i] = (double*) malloc(3*sizeof(double));
@@ -2460,14 +2460,14 @@ void dumpContourPair(FILE *fp, contourPair *cp) {
   c2N = (vertex*) getListNode(cp->c2->vertices,listSize(cp->c2->vertices)-1)->data;
 
   fprintf(fp, "%p & %p: \n%d: (%3.1f,%3.1f) to (%3.1f,%3.1f) & %d: (%3.1f,%3.1f) to (%3.1f,%3.1f)\n",
-	  cp->c1, cp->c2,
-	  listSize(cp->c1->vertices),
-	  c10->x, c10->y,
-	  c1N->x, c1N->y,
-	  listSize(cp->c2->vertices),
-	  c20->x, c20->y,
-	  c2N->x, c2N->y
-	  );
+          cp->c1, cp->c2,
+          listSize(cp->c1->vertices),
+          c10->x, c10->y,
+          c1N->x, c1N->y,
+          listSize(cp->c2->vertices),
+          c20->x, c20->y,
+          c2N->x, c2N->y
+          );
 }
 
 /********************************************************************

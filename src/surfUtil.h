@@ -3,7 +3,7 @@
  * libsr
  * Oliver Hinds <oph@bu.edu> 2005-06-22
  *
- * 
+ *
  *
  *****************************************************************************/
 
@@ -20,7 +20,7 @@
 #include"surfUtil.extern"
 
 #define DEFAULT_MAX_VERTICES 100000
-//#define DEFAULT_MAX_VERTICES_EXPAND 10000 
+//#define DEFAULT_MAX_VERTICES_EXPAND 10000
 #define DEFAULT_MAX_FACES 200000
 //#define DEFAULT_MAX_FACES_EXPAND 20000
 
@@ -36,7 +36,7 @@
 surface *createSurfaceDefault();
 
 /**
- * create a surface structure with a specified number of vertices and faces 
+ * create a surface structure with a specified number of vertices and faces
  * returns a surface structure or null if creation flibvps
  */
 surface *createSurface(unsigned int nVerts, unsigned int nFaces);
@@ -71,7 +71,7 @@ int addVertexStruct(surface *surf, vertex* v);
 /**
  * add a vertex to a surface, without duplicating vertices this
  * function just the x, y, and z fields of the vertex struct to check
- * if the vertex is already in the surface. if so, the original index 
+ * if the vertex is already in the surface. if so, the original index
  * is returned.
  * returns index of added vertex or flibvpure (-1)
  */
@@ -84,7 +84,7 @@ int addVertexStructNoDuplicate(surface *surf, vertex* v);
 int addVertexCoord(surface *surf, double x, double y, double z, double lab, int boundary);
 
 /**
- * add a vertex to a surface by coordinates if it doesnt already exist 
+ * add a vertex to a surface by coordinates if it doesnt already exist
  * in the surface
  * returns index of added vertex or flibvpure (-1)
  */
@@ -158,7 +158,7 @@ list *capContourSkeleton(contour *cont, double z);
 
 /**
  * caps a contour by tiling it with a point at its centroid and the z
- * coordinate passed 
+ * coordinate passed
  * takes as input a contour and a z coordinate to place the point
  * returns a face list, or NULL, if the method fails
  */
@@ -203,13 +203,13 @@ void appendAdjacentEntries(vertex ***vlist, vertex *v, vertex *otherV);
 void fillHoles(surface *surf, int numHolesLeft);
 
 /**
- * fill holes created by the branching process. 
+ * fill holes created by the branching process.
  */
 void fillBranchedHoles(surface *surf);
 
 /**
  * decides whether a contour pair is one side of a branched boundary hole
- */ 
+ */
 int isBranchedBoundary(contourPair *cp);
 
 /**
@@ -234,7 +234,7 @@ void add3DPolyToSurf(surface *surf, list *plist);
 
 /**
  * recursively trace a poly boundary to recover an optimal tiling
- */ 
+ */
 void tracePolyBoundary(surface *surf, int **lambda, int *vlist, int i, int k);
 
 /**
@@ -306,19 +306,19 @@ int verticesEqual(vertex *v1, vertex *v2);
  * tests two segments for intersection based on the 12 coordinates of
  * the end points of two three dimensional segments
  */
-int segmentsIntersect(float x00, float y00, float z00, 
-		      float x01, float y01, float z01, 
-		      float x10, float y10, float z10, 
-		      float x11, float y11, float z11);
+int segmentsIntersect(float x00, float y00, float z00,
+                      float x01, float y01, float z01,
+                      float x10, float y10, float z10,
+                      float x11, float y11, float z11);
 
 /* /\** */
 /*  * tests two segments for intersection based on the 8 coordinates of */
 /*  * the end points of two two dimensional segments */
 /*  *\/ */
 /* int segmentsIntersect2d(float x00, float y00,  */
-/* 			float x01, float y01,  */
-/* 			float x10, float y10,  */
-/* 			float x11, float y11); */
+/*                      float x01, float y01,  */
+/*                      float x10, float y10,  */
+/*                      float x11, float y11); */
 
 /**
  * tests two edges for intersection
@@ -328,7 +328,7 @@ int edgesIntersect(edge *e1, edge *e2);
 /**
  * test intersection of an edge and a face
  *
- * algorithm pieced from two places 
+ * algorithm pieced from two places
  * http://astronomy.swin.edu.au/~pbourke/geometry/planeline/
  * http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html
  */
@@ -349,7 +349,7 @@ vector computeCenterOfMass(surface *surf);
  */
 void computeSurfBounds(surface *surf, double *bounds);
 
-/** 
+/**
  * transform the coordinates of the surface vertices by a linear transform
  */
 int transformSurfaceVertices(surface *surf, float A[4][4]);

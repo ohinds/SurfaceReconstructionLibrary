@@ -1,7 +1,7 @@
 /*
  * Binary HEAP.
  *
- * This code implements: 
+ * This code implements:
  *
  * heap_t        : Type to delare new heaps.
  * heap_init     : Initilizes the heap.
@@ -17,7 +17,7 @@
  * Copyright (C) 2000 Ismael Ripoll  (Valencia, Spain)
  * Copyright (C) 2006 Oliver Hinds <oph@bu.edu>
  *
- * 
+ *
  *
  *
  */
@@ -33,7 +33,7 @@
 //#define INDEX_TYPE     unsigned char
 //#define INDEX_TYPE     unsigned short
 #define INDEX_TYPE     unsigned long
-//#define INDEX_TYPE     unsigned long long 
+//#define INDEX_TYPE     unsigned long long
 
 //#include "mqueue.h"
 //#define HEAP_ITEM_TYPE      long
@@ -47,7 +47,7 @@
 /* Among same priority, keep FIFO order. */
 #define FIFO_PRIO
 
-/*There is a posible error of overflow in the order values 
+/*There is a posible error of overflow in the order values
  *  So to minimize this posibility redefine the ORDER_TYPE
  *    as you think.
  * (unsigned long long) is practicaly impossible to overflow,
@@ -56,7 +56,7 @@
 #ifdef FIFO_PRIO
 //#define ORDER_TYPE     unsigned short
 #define ORDER_TYPE     unsigned long
-//#define ORDER_TYPE     unsigned long long 
+//#define ORDER_TYPE     unsigned long long
 #endif
 
 
@@ -69,21 +69,21 @@
 struct heapdt_t_t;
 struct item_dt_t_t;
 
-typedef struct item_dt_t_t{  
-    HEAP_ITEM_TYPE   user_data;
-    union {
-        struct item_dt_t_t *next_free;
-        //struct heapdt_t_t  *heapdata_p;
-        INDEX_TYPE heapdata;
-    }p_ctrl;
-    HEAP_KEY_SORT_TYPE key;
+typedef struct item_dt_t_t{
+  HEAP_ITEM_TYPE   user_data;
+  union {
+    struct item_dt_t_t *next_free;
+    //struct heapdt_t_t  *heapdata_p;
+    INDEX_TYPE heapdata;
+  }p_ctrl;
+  HEAP_KEY_SORT_TYPE key;
 #ifdef FIFO_PRIO
-    ORDER_TYPE order;
+  ORDER_TYPE order;
 #endif
 } item_data_t;
 
 typedef struct  heapdt_t_t{
-    item_data_t *val;
+  item_data_t *val;
 } heapdata_t;
 
 //typedef INDEX_TYPE heap_it_handler;
@@ -94,17 +94,17 @@ typedef item_data_t * heap_it_handler;
 
 /* This is a heap */
 typedef struct {
-    heapdata_t   *heap; /* The first element of the array is unused: heap[0] */
-    unsigned int heap_len;   /* number of elements in the heap */
-    unsigned int max_len; 
-    item_data_t  *data_p;
-    item_data_t  *first_free;
+  heapdata_t   *heap; /* The first element of the array is unused: heap[0] */
+  unsigned int heap_len;   /* number of elements in the heap */
+  unsigned int max_len;
+  item_data_t  *data_p;
+  item_data_t  *first_free;
 #ifdef FIFO_PRIO
-    ORDER_TYPE actual;
+  ORDER_TYPE actual;
 #define _ACTUAL_ ,((ORDER_TYPE)0)
 #else
-#define _ACTUAL_ 
-#endif                
+#define _ACTUAL_
+#endif
 #define _POINT_ ,NULL,((INDEX_TYPE)0)
 } heap_t;
 
